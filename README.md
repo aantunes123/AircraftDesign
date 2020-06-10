@@ -1,8 +1,8 @@
-# Build and Installation Instructions for AeroITA
+# Build and Installation Instructions for AircraftDesign
 
 ### INTRODUCTION
 
-  AeroITa is a collaborative environment focused in aircraft design. The environment consider different aeronautical disciplines and consists in an initiative from aeronautical engineers with ITA professors and students.
+  AircraftDesign is a collaborative environment focused in aircraft design. The environment consider different aeronautical disciplines and consists in an initiative from aeronautical engineers with ITA professors and students.
 
 ### LICENSE
 
@@ -10,7 +10,7 @@ Permissions of this strongest copyleft license are conditioned on making availab
   
 ### DEPENDENCIES
 
-AeroITa relies on a variety of libraries and code made available by other authors.  If you are an AeroITa user, you probably don't need to
+AircraftDesign relies on a variety of libraries and code made available by other authors.  If you are an AircraftDesign user, you probably don't need to
 worry about this.  Take this section as informational, providing credit where due.
 
 ##### Installed by the developer.
