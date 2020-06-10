@@ -1,0 +1,26 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                 VERTICAL EMPENNAGE INPUT VARIABLES                         #
+#                                                                            #
+#   sref           --> vertical area                          [m2]  [real]   #
+#   ar             --> vertical aspec ratio                    [-]  [real]   #
+#   sweep14        --> vertical sweep 1/4 chors              [deg]  [real]   #
+#   taper          --> vertical Croot/Ctip                     [-]  [real]   #
+#   th_root        --> root thickness                          [-]  [real]   #
+#   th_tip         --> tip thickness                           [-]  [real]   #
+#   appex_14croot  --> appex at 1/4 of the VT_Croot            [m]  [real]   #
+#                                                                            #
+#----------------------------------------------------------------------------#
+sref                =  16.210
+ar                  =   1.710
+sweep14             =  35.000
+taper               =   0.310
+th_root             =   0.110
+th_tip              =   0.110
+appex_14croot       =  22.530
+
+profiles            =   2
+parameterization    =   bezier
+bezier_cp           =   .\Input_Files\Bezier_CP_VT.inp
+output_profile      =   .\Output_Files\airfoil.dat
+

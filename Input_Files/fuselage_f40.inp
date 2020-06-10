@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                 FUSELAGE INPUT VARIABLES                                   #
+#                                                                            #
+#   fus_nose            --> fuselage nose length              [m]  [real]    #
+#   fus_pitch           --> distance between the seats        [m]  [real]    #
+#   fus_cone            --> fuselage cone length              [m]  [real]    #
+#   fus_diameter        --> self explanatory                  [m]  [real]    #
+#   abreast             --> passengers per row                [-]  [real]    #
+#                                                                            #
+#----------------------------------------------------------------------------# 
+abreast              =   4
+nose                 =  11.700
+pitch                =   0.700
+cone                 =   9.000
+diameter             =   3.500
+seat_cushion_width   =   0.470   
+seat_arm_width       =   0.050   
+aisle_width          =   0.400   
+dlength              =   2.000   
+lnose_dfus_min       =   1.50    
+lnose_dfus_max       =   2.20    
+ltail_dfus_min       =   2.50    
+ltail_dfus_max       =   3.20    

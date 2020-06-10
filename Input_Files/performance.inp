@@ -1,0 +1,30 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                  DESIGN INPUT VARIABLES                                    #
+#                                                                            #
+#   ncrew               --> atendees                      [-] [integer]      #
+#   machs               --> Subsonic Mach to compute CDf. [-] [real]         #
+#   mach_climb          --> mach @ climb stage            [-] [real]         #
+#   mach                --> Cruise Mach Number            [-] [real]         #
+#   velocity            --> diving speed                 [kt] [real]         #
+#   climb_time          --> time to climb               [min] [real]         #
+#   range               --> range of max payload         [nm] [real]         #
+#   fuel reserve        --> flight divertion              [%] [real]         #
+#   warm_wf             --> mass fraction warm             [-][real]         #
+#   taxi_wf             --> mass fraction warm             [-][real]         #
+#   takeoff_wf          --> mass fraction warm             [-][real]         #
+#   climb_wf            --> mass fraction warm             [-][real]         #
+#   descend_wf          --> mass fraction warm             [-][real]         #
+#   land_wf             --> mass fraction warm             [-][real]         #
+#                                                                            #
+#----------------------------------------------------------------------------#
+vd                  =   380.000
+climb_time          =    33.000
+range               =  1800.000
+fuel_reserve        =     1.000
+warm_wf             =     0.990
+taxi_wf             =     0.990
+takeoff_wf          =     0.995
+climb_wf            =     0.980
+descend_wf          =     0.990
+land_wf             =     0.992 

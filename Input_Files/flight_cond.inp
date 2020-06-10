@@ -1,0 +1,24 @@
+#--------------------------------------------------------------------------#
+#                                                                          #
+#                      Flight Condition                                    #
+#                      -----------------                                   #
+#                                                                          #
+# (a)  Flag      --> (0) In: Vel. / Out: Mach | (1) In: Mach / Out:Vel.    #
+# (b)  Altitude  --> Flight Level       [Ft]                               #
+# (c)  Velocity  --> Velocity True     [m/s]                               # 
+# (d)  Mach      --> Mach Number         [-]                               #
+# (e)  ISA       --> Delta ISA           [C]                               # 
+#                                                                          #
+# Order of the information                                                 #
+#                                                                          #
+#         Data                 Phase                                       #
+#         ----                 -----                                       #
+#                                                                          #
+#   (a)  (b)  (c)  (d)  (e)    Climb                                       #
+#   (a)  (b)  (c)  (d)  (e)    Cruise                                      #
+#   (a)  (b)  (c)  (d)  (e)    Landing                                     #
+#                                                                          #
+#--------------------------------------------------------------------------#
+1 16000 120.0 0.35  0.00
+1 32000 120.0 0.50  0.00
+1 10000  80.0 0.20  0.00

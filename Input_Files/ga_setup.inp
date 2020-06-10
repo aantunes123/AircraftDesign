@@ -1,0 +1,11 @@
+Generation   =  6
+Population   =  8
+Pmut         =  0.025
+Pcross       =  0.950
+Mating_Pool  =  2
+Type         =  Real
+Blx_alpha    =  0.5
+Var_Size     =  30
+Variables    =  1
+Var_Lower    =   112.0 
+Var_Upper    =   140.0 

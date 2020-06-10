@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                 HORIZONTAL EMPENNAGE INPUT VARIABLES                       #
+#                                                                            #
+#   horz_area           --> horizontal area                   [m2]  [real]   #
+#   horz_ar             --> horizontal aspec ratio             [-]  [real]   #
+#   horz_sweep14        --> horizontal sweep 1/4 chors       [deg]  [real]   #
+#   horz_taper          --> horizontal Croot/Ctip              [-]  [real]   #
+#   horz_dihedral       --> self explanatory                 [deg]  [real]   #
+#   horz_th_root        --> root thickness                     [-]  [real]   #
+#   horz_th_tip         --> tip thickness                      [-]  [real]   #
+#   horz_width_fus      --> fuselage width @ 1/4 Croot         [m]  [real]   #
+#   horz_appex_14_croot --> appex at 1/4 of the HT_Croot       [m]  [real]   #
+#                                                                            #
+#----------------------------------------------------------------------------#
+sref                =  25.570
+ar                  =   5.580
+sweep14             =  30.200
+taper               =   0.260
+dihedral            =   8.000
+th_root             =   0.120
+th_tip              =   0.120
+width_fus           =   1.260
+appex_14croot       =  24.530

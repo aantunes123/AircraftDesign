@@ -1,0 +1,38 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                  WING INPUT VARIABLES                                      #
+#                                                                            #
+#   sref           --> self explanatory                    [m2]  [real]      #
+#   ar             --> wing aspect ratio                    [-]  [real]      #
+#   sweep14        --> wing sweep 1/4 chord               [deg]  [real]      #
+#   taper          --> wing taper Croot/Ctip                [-]  [real]      #
+#   dihedral       --> self explanatory                   [deg]  [real]      #
+#   kink           --> wing Ykink / Ytip                    [-]  [real]      #
+#   tcroot         --> relative thickness                   [-]  [real]      #
+#   tckink         --> relative thickness                   [-]  [real]      #
+#   tctip          --> relative thickness                   [-]  [real]      #
+#   stubwidth      --> stub width (fuselage width)          [m]  [real]      #
+#   xappex         --> wing location X                      [m]  [real]      #
+#   yappex         --> wing location Y                      [m]  [real]      #
+#   spar_LE        --> Front spar x/c position              [-]  [real]      #
+#   spar_TE        --> Rear spar x/c position               [-]  [real]      #
+#   tank_y         --> Fuel tank length/wing_semispan       [-]  [real]      #
+#   sections       --> wing No. of stations                 [-]  [int.]      #
+#                                                                            #
+#----------------------------------------------------------------------------#
+sref                =  112.0000
+ar                  =   09.0000
+sweep14             =  27.0000
+taper               =   0.2830
+dihedral            =   5.00000
+kink                =   0.39282
+tcroot              =   0.1425
+tckink              =   0.1150
+tctip               =   0.1038
+stubwidth           =   3.50000
+xappex              =  00.00000
+yappex              =  -1.23000
+spar_LE             =   0.20
+spar_TE             =   0.60
+tank_y              =   0.70
+sections            =   10

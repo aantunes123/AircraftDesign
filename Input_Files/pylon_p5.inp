@@ -1,0 +1,15 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                   PROPULSIVE INPUT VARIABLES                               #
+#   pyl_croot           --> pylon root chord                  [m]    [real]  #
+#   pyl_ctip            --> pylon tip chord                   [m]    [real]  #
+#   pyl_len             --> pylon length                      [m]    [real]  #
+#   pyl_sweep           --> pylon sweep angle               [deg]    [real]  #
+#   pyl_tc              --> pylon relative thickness          [m]    [real]  #
+#                                                                            #
+#----------------------------------------------------------------------------#
+croot      =     5.3953
+ctip       =     4.3090
+len        =     0.5144
+sweep      =   -84.6000
+tc         =     0.1020
