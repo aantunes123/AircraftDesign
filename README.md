@@ -2,18 +2,15 @@
 
 ### INTRODUCTION
 
-  AircraftDesign is a collaborative environment focused in aircraft design. The environment consider different aeronautical disciplines and consists in an initiative from aeronautical engineers with ITA professors and students.
+  This is a collaborative environment focused in preliminary aircraft design. The environment consider different aeronautical disciplines and consists in an initiative towards a open tool for the students.
 
 ### LICENSE
 
 Permissions of this strongest copyleft license are conditioned on making available complete source code of licensed works and          modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights. When a modified version is used to provide a service over a network, the complete source code of the modified version must be made available.   
-  
+
+The present implementation relies on a variety of libraries and package. Bellow the dependecies that must be available on your computer.
+
 ### DEPENDENCIES
-
-AircraftDesign relies on a variety of libraries and code made available by other authors.  If you are an AircraftDesign user, you probably don't need to
-worry about this.  Take this section as informational, providing credit where due.
-
-##### Installed by the developer.
 
 - [Python](http://www.python.org) - Scripting language.  Optional dependency required if building Python API module.
 
