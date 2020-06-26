@@ -98,7 +98,6 @@ class Create_Wing(object, metaclass=AuxTools):
                 if str(vvars[i].strip()) == str(key.strip()):
                     self.geo['wing'][key] = float(vvals[i])
 
-        pass
 
 #----------------------------------------------------------------------#
 #                    Computing the Reference Wing                      #
@@ -262,35 +261,6 @@ class Create_Wing(object, metaclass=AuxTools):
         else:
             self.geo['wing']['tcave'] = tc[3] - ((y[3]-self.geo['wing']['ycma'])/(y[3]-y[2]))*(tc[3]-tc[2])
 
-#
-#---- Printing the data
-        if self.screen_flag == True:
-            print('  |-------------------------------------------------|')
-            print('  |               Reference WING                    |')
-            print('  |-------------------------------------------------|')
-            print('   Sref          [m2]   --> ' + "{0:.3f}".format(self.geo['wing']['sref']))
-            print('   AR            [-]    --> ' + "{0:.3f}".format(self.geo['wing']['ar']))
-            print('   Sweep         [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweep14']))
-            print('   Taper         [-]    --> ' + "{0:.3f}".format(self.geo['wing']['taper']))
-            print('   Span          [m]    --> ' + "{0:.3f}".format(self.geo['wing']['span']))        
-            print('   Dihedral      [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['dihedral']))
-            print('   Wing_CMA      [m]    --> ' + "{0:.3f}".format(self.geo['wing']['cma']))
-            print('   Wing_YCMA     [m]    --> ' + "{0:.3f}".format(self.geo['wing']['ycma']))
-            print('   Wing_XCMA     [m]    --> ' + "{0:.3f}".format(self.geo['wing']['xcma']))        
-            print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweeple']))
-            print('   Sweep_TE1     [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweepte1']))
-            print('   Swet          [m2]   --> ' + "{0:.3f}".format(self.geo['wing']['swet']))        
-            print('   Y_Kink        [m]    --> ' + "{0:.3f}".format(self.geo['wing']['kink']))
-            print('   t/c_Root      [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tcroot']))
-            print('   t/c_Kink      [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tckink']))
-            print('   t/c_Tip       [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tctip']))
-            print('   Y_stub        [m]    --> ' + "{0:.3f}".format(self.geo['wing']['stubwidth']))
-            print('   Y_Appex       [m]    --> ' + "{0:.3f}".format(self.geo['wing']['yappex']))
-            print('   Wing_Sections [-]    --> ' + "{0:.3f}".format(self.geo['wing']['sections']))
-            print('                                                                 ')        
-       
-        pass
-
 #----------------------------------------------------------------------#
     def Converge_Wing_Area(self,x):
 
@@ -438,5 +408,32 @@ class Create_Wing(object, metaclass=AuxTools):
 # I also have right and left wing...        
         self.geo['Kink_wing']['swet']      =  2.0*(self.geo['Kink_wing']['swetin'] + self.geo['Kink_wing']['swetout'])   
 
-      
 
+#----------------------------------------------------------------------#
+#                Printing the Wing Geo on the Screen                   #
+#----------------------------------------------------------------------#
+    def Print_WingGeo(self):   
+
+        print('  |-------------------------------------------------|')
+        print('  |               Reference WING                    |')
+        print('  |-------------------------------------------------|')
+        print('   Sref          [m2]   --> ' + "{0:.3f}".format(self.geo['wing']['sref']))
+        print('   AR            [-]    --> ' + "{0:.3f}".format(self.geo['wing']['ar']))
+        print('   Sweep         [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweep14']))
+        print('   Taper         [-]    --> ' + "{0:.3f}".format(self.geo['wing']['taper']))
+        print('   Span          [m]    --> ' + "{0:.3f}".format(self.geo['wing']['span']))        
+        print('   Dihedral      [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['dihedral']))
+        print('   Wing_CMA      [m]    --> ' + "{0:.3f}".format(self.geo['wing']['cma']))
+        print('   Wing_YCMA     [m]    --> ' + "{0:.3f}".format(self.geo['wing']['ycma']))
+        print('   Wing_XCMA     [m]    --> ' + "{0:.3f}".format(self.geo['wing']['xcma']))        
+        print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweeple']))
+        print('   Sweep_TE1     [deg]  --> ' + "{0:.3f}".format(self.geo['wing']['sweepte1']))
+        print('   Swet          [m2]   --> ' + "{0:.3f}".format(self.geo['wing']['swet']))        
+        print('   Y_Kink        [m]    --> ' + "{0:.3f}".format(self.geo['wing']['kink']))
+        print('   t/c_Root      [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tcroot']))
+        print('   t/c_Kink      [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tckink']))
+        print('   t/c_Tip       [-]    --> ' + "{0:.3f}".format(self.geo['wing']['tctip']))
+        print('   Y_stub        [m]    --> ' + "{0:.3f}".format(self.geo['wing']['stubwidth']))
+        print('   Y_Appex       [m]    --> ' + "{0:.3f}".format(self.geo['wing']['yappex']))
+        print('   Wing_Sections [-]    --> ' + "{0:.3f}".format(self.geo['wing']['sections']))
+        print('                                                                 ')        

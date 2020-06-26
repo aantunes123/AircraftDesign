@@ -75,9 +75,23 @@ class Create_Pylon(object, metaclass=AuxTools):
 
         pass
 #----------------------------------------------------------------------#
-#                 Computing Nacelle Component                          #
+#                 Print the Pylon Component                            #
 #----------------------------------------------------------------------#    
-    def Pylon(self):
+    def Print_Pylon(self):
+        print('  |-------------------------------------------------|')
+        print('  |               Pylon Geometry                    |')
+        print('  |-------------------------------------------------|')
+        print('   Croot         [m]    --> ' + "{0:.3f}".format(          \
+                                                   self.geo['pylon']['croot']))
+        print('   Ctip          [m]    --> ' + "{0:.3f}".format(          \
+                                                    self.geo['pylon']['ctip']))
 
-           print('Pylon data: ',self.geo['pylon'])                    
-    pass
+        print('   Length        [m]    --> ' + "{0:.3f}".format(          \
+                                                     self.geo['pylon']['len']))
+        print('   Sweep         [m]    --> ' + "{0:.3f}".format(          \
+                                                   self.geo['pylon']['sweep']))
+        print('   T/C           [m]    --> ' + "{0:.3f}".format(          \
+                                                      self.geo['pylon']['tc']))
+
+        
+#           print('Pylon data: ',self.geo['pylon'])                        

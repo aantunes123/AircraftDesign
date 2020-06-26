@@ -40,6 +40,8 @@ from Flight_Mechanics.class_mechanics import Flight_Mechanics
 from Weight.class_weight import Weight
 from Operation.class_operation import Oper_Items
 from Plotting.plot import Rendering
+
+from scipy.optimize import fmin
 #from Writting.class_writting import Tee
 #import sys
 import os
@@ -166,17 +168,27 @@ class Create_Aircraft(Create_Wing,
         self.Fus_Torenbeek()
 
 # Calling the Method to Compute the Nacelle Geometry - Class Create_Nacelle.
-        self.Nacelle()
+       # self.Nacelle()
 
 # Calling the Method to Compute the Pylon Geometry - Class Create_Pylon.
-        self.Pylon()
+       # self.Pylon()
 
 # Calling the rendering Method
-        Rendering(self)
+      #  Rendering(self)
+
+#
+#---- Printing data
+        if self.screen_flag == True:
+            self.Print_HTGeo()
+            self.Print_WingGeo()    
+            self.Print_VerticalGeo()
+            self.Print_Pylon()
+            self.Print_Nacelle()            
+      
     pass
 # ------------------------------------------------------------------------------
 
-    def Compute_Weight(self, airprop):
+    def Converge_Weight(self, mtow0,*args):
         """
             This method calls those other methods that are available inside
             the Class Weight. 
@@ -186,7 +198,12 @@ class Create_Aircraft(Create_Wing,
             weight component is being computed.
 
         """
-
+        self.weight['mtow'] = mtow0
+        airprop             = args[0]
+        
+# Usuable Fuel...
+        self.Usable_Fuel_Weight(airprop)
+        
 # Horizontal Tail Weight.
         self.HT_Weight(airprop)
 
@@ -211,12 +228,35 @@ class Create_Aircraft(Create_Wing,
 # Miscellaneous Weight.
         self.Miscellaneous_Weight()
 
-# Usuable Fuel...
-        self.Usable_Fuel_Weight(airprop)
+# Wing Weight.
+        self.Wing_Weight()
 
-    pass
+# Performing the computation of the initial total weight.
+        self.Total_Weight()
 
-# ------------------------------------------------------------------------------
+#  Returning the difference between the imposed maximum take-off weight 
+#  and the MTOW computed by the methods above called. This difference must
+#  be equal to zero.... Another important check is the difference between the 
+#  wing fuel capacity and the requirent fuel to accomplish the mission.
+#
+       
+        return abs(self.weight['total'] - self.weight['mtow'])
+
+# -----------------------------------------------------------------------------
+    def Compute_Weight(self,airprop):
+        """
+            This method perform the iterative process to get the MTWO of the 
+            aircraft. It starts with a very low MTOW and keep raising 
+        
+        """
+        fmin(self.Converge_Weight,3000,args=(airprop,),maxiter = 1000,ftol=2.0)         
+
+#
+#---- Printing data
+        if self.screen_flag == True:
+            self.Print_Weight()
+            
+# -----------------------------------------------------------------------------
     def Compute_Drag(self, airprop):
         """
             Computing the Drag of the aircraft components using 
@@ -232,8 +272,13 @@ class Create_Aircraft(Create_Wing,
 
         self.FrictionDrag(airprop, components, phases)
 
+#
+#---- Printing data
+    #    if self.screen_flag == True:
+    #       self.Print_Weight()
 
-# ------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 
     def Compute_Flight_Mechanics(self):
         """
@@ -246,8 +291,19 @@ class Create_Aircraft(Create_Wing,
 
         self.Trim()
 
+# -----------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------
+    def Compute_Performance(self):
+        """
+            Computing the perforamnce computation.
+
+            The Class Performance must be implemented.
+
+        """
+
+        self.Converge_MTOW()
+
+# -----------------------------------------------------------------------------
 
     def Destructor(self):
         """

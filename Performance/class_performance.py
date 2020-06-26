@@ -67,11 +67,9 @@ class Performance(object, metaclass=AuxTools):
                     pass
         f.close()
 
-
 #--- Updating the variables...
         for i in range(0,len(vvars)):
             for key in (self.perf):
                 if str(vvars[i].strip()) == str(key.strip()):
                     self.perf[key] = float(vvals[i])
 
-        pass   

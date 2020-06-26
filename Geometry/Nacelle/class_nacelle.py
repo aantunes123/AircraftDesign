@@ -73,11 +73,21 @@ class Create_Nacelle(object, metaclass=AuxTools):
                     self.geo['nacelle'][key] = float(vvals[i])
    
 
-        pass
 #----------------------------------------------------------------------#
-#                 Computing Nacelle Component                          #
+#                 Print the Nacelle Component                          #
 #----------------------------------------------------------------------#    
-    def Nacelle(self):
+    def Print_Nacelle(self):
+        print('  |-------------------------------------------------|')
+        print('  |               Nacelle Geometry                  |')
+        print('  |-------------------------------------------------|')
+        print('   Type          [m]    --> ' + "{0:.3f}".format(          \
+                                                  self.geo['nacelle']['type']))
+        print('   Number        [-]    --> ' + "{0:.3f}".format(          \
+                                                    self.geo['nacelle']['no']))
 
-           print('Nacelle data: ',self.geo['nacelle'])                    
-    pass
+        print('   Diameter      [m]    --> ' + "{0:.3f}".format(          \
+                                                  self.geo['nacelle']['dfan']))
+        print('   Length        [m]    --> ' + "{0:.3f}".format(          \
+                                                  self.geo['nacelle']['lmax']))
+        print('   T/C           [m]    --> ' + "{0:.3f}".format(          \
+                                                      self.geo['nacelle']['tc']))                 

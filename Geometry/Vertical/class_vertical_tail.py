@@ -219,58 +219,61 @@ class Create_Vertical(object, metaclass=AuxTools):
 
         self.geo['vert']['tcave'] = tc[1] - ((z[1]-self.geo['vert']['zcma'])/ \
                                     (z[1]-z[0]))*(tc[1]-tc[0])
-#
-#---- Printing data
-        if self.screen_flag == True:
-            print('  |-------------------------------------------------|')
-            print('  |           Reference Vertical Tail               |')
-            print('  |-------------------------------------------------|')
-            print('   Sref          [m2]   --> ' + "{0:.3f}".format(          \
+
+#----------------------------------------------------------------------#
+#                Printing the Vertical Tail Geo on the Screen          #
+#----------------------------------------------------------------------#
+    def Print_VerticalGeo(self):   
+
+        print('  |-------------------------------------------------|')
+        print('  |           Reference Vertical Tail               |')
+        print('  |-------------------------------------------------|')
+        print('   Sref          [m2]   --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['sref']))
             
-            print('   AR            [-]    --> ' + "{0:.3f}".format(          \
+        print('   AR            [-]    --> ' + "{0:.3f}".format(          \
                                                        self.geo['vert']['ar']))
             
-            print('   Vert_CMA      [m]    --> ' + "{0:.3f}".format(          \
+        print('   Vert_CMA      [m]    --> ' + "{0:.3f}".format(          \
                                                       self.geo['vert']['cma']))
             
-            print('   Vert_XCMA     [m]    --> ' + "{0:.3f}".format(          \
+        print('   Vert_XCMA     [m]    --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['xcma']))
             
-            print('   Vert_ZCMA     [m]    --> ' + "{0:.3f}".format(          \
+        print('   Vert_ZCMA     [m]    --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['zcma']))        
             
-            print('   Sweep1/4      [deg]  --> ' + "{0:.3f}".format(          \
+        print('   Sweep1/4      [deg]  --> ' + "{0:.3f}".format(          \
                                                   self.geo['vert']['sweep14']))
             
-            print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".format(          \
+        print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".format(          \
                                                   self.geo['vert']['sweeple']))
             
-            print('   Sweep_TE      [deg]  --> ' + "{0:.3f}".format(          \
+        print('   Sweep_TE      [deg]  --> ' + "{0:.3f}".format(          \
                                                   self.geo['vert']['sweepte']))
             
-            print('   Swet          [deg]  --> ' + "{0:.3f}".format(          \
+        print('   Swet          [deg]  --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['swet']))        
             
-            print('   Taper         [-]    --> ' + "{0:.3f}".format(          \
+        print('   Taper         [-]    --> ' + "{0:.3f}".format(          \
                                                     self.geo['vert']['taper']))
             
-            print('   t/c_Root      [-]    --> ' + "{0:.3f}".format(          \
+        print('   t/c_Root      [-]    --> ' + "{0:.3f}".format(          \
                                                   self.geo['vert']['th_root']))
             
-            print('   t/c_Tip       [-]    --> ' + "{0:.3f}".format(          \
+        print('   t/c_Tip       [-]    --> ' + "{0:.3f}".format(          \
                                                    self.geo['vert']['th_tip']))
             
-            print('   Span          [m]    --> ' + "{0:.3f}".format(          \
+        print('   Span          [m]    --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['span']))
             
-            print('   Croot         [m]    --> ' + "{0:.3f}".format(          \
+        print('   Croot         [m]    --> ' + "{0:.3f}".format(          \
                                                     self.geo['vert']['croot']))
             
-            print('   Ctip          [m]    --> ' + "{0:.3f}".format(          \
+        print('   Ctip          [m]    --> ' + "{0:.3f}".format(          \
                                                      self.geo['vert']['ctip']))
             
-            print('                                                          ')    
+        print('                                                          ')    
 
 #---
 #
@@ -281,7 +284,3 @@ class Create_Vertical(object, metaclass=AuxTools):
         Bezier(self.geo['vert']['bezier_cp'].strip(),                         \
                self.geo['vert']['output_profile'].strip(),                    \
                self.geo['vert']['profiles'])
-
-    pass
-
-      

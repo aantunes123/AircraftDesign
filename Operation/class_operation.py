@@ -41,8 +41,8 @@ class Oper_Items(object):
                               Provide the argument Foper = 'file_name'.")            
         self.file_name = kwargs['Foper']       
 
-        self.operating['no_pass']        =   102
-        self.operating['ncrew']          =     4
+        self.operating['no_pass']        =   113
+        self.operating['ncrew']          =     3
         self.operating['pass_weight']    =   100.0        
         self.operating['freight_weight'] =  1200.0   
         self.operating['mtow']           = 52000.0           

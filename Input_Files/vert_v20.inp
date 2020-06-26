@@ -17,7 +17,7 @@ sweep14             =  35.000
 taper               =   0.310
 th_root             =   0.110
 th_tip              =   0.110
-appex_14croot       =  22.530
+appex_14croot       =  30.930
 
 profiles            =   2
 parameterization    =   bezier

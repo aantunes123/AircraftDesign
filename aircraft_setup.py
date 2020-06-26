@@ -30,15 +30,17 @@
 from Flight_Conditions.flight_cond import Flight_Setup
 from Aircraft.class_aircraft import Create_Aircraft
 from Plotting.plot import Plot_Figure
-#from Optimization.GA_Class import Simple_GA
-#from Optimization.GA_Setup import GA_Setup
-#import scipy
-#from scipy.optimize import minimize
+from Optimization.GA_Class import Simple_GA
+from Optimization.GA_Setup import GA_Setup
+
+from scipy.optimize import minimize
+from scipy.optimize import fmin
+
 #import pprint
 
 
 # -----------------------------------------------------------------------------
-def Aircraft_Opt(x):
+def Aircraft_Opt(x,*args,**kargs):
     """
         This method defines the optimization problem. Thus, the user
         must select the objective function and perform the setup of
@@ -49,12 +51,15 @@ def Aircraft_Opt(x):
 
 # Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
     p100.Compute_Geometry()
-    p100.Fuel_Tank_Weight()
 
-    return p100.geo['wing']['vol']
+# Computing the Weight...
+    p100.Compute_Weight(args[0])
 
+# Computing the Drag....
+  #  p100.Compute_Drag(atmos)
 
-pass
+#    return x
+    return abs(p100.weight['wing']['Maxfuel']-p100.weight['fuel'])
 
 
 # -----------------------------------------------------------------------------
@@ -77,46 +82,25 @@ if __name__ == '__main__':
 
 # Flight Conditions and computing the Atmospheric Properties
     atmos = Flight_Setup('.\\Input_files\\flight_cond.inp')
+ 
+# ------  Optimization Gradient Here 
+    x = 90.0
+    res = minimize(Aircraft_Opt, x, args=atmos, method='BFGS',                \
+                    bounds=((80.0,120.0)),                                    \
+                    options={'gtol': 1e-6,                                    \
+                             'disp': True,                                    \
+                             'iprint': 1,                                     \
+                             'eps': 0.05,                                     \
+                             'maxiter': 400})
 
-# Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
-    p100.Compute_Geometry()
-
-# Computing the Weight...
-    p100.Compute_Weight(atmos)
-
-# Computing the Drag....
-    p100.Compute_Drag(atmos)
-
-    print(p100.weight['fus'])
-    # print(p100.__str__())
-# Computing the Flight Mechanics....
-# p100.Compute_Flight_Mechanics()
-
-
-# ---------------------  Optimization GA Here ----------------------------------
+# -----    Optimization GA Here 
 
     # gen_vals = GA_Setup()                          # Input File: 'ga_setup.inp'
     # ga       = Simple_GA(*gen_vals)                # Creating the Object ga
 
     # ga.Opt_SGA(Aircraft_Opt)                       # Calling the SGA Method
 
-# ---------------------  Optimization Gradient Here ----------------------------
-    #x = 120.0
-    # res = minimize(Aircraft_Opt, x, method='BFGS', bounds=((112.0,120.0)),    \
-    #      options={'gtol': 1e-6, 'disp': True, 'iprint': 1, 'eps': 0.05,      \
-    #                'maxiter': 400})
-
 # Plotting the Geometry
-    Plot_Figure(True, 3, p100)
+#    Plot_Figure(True, 3, p100)
 
-# Deleting the Object...
-   # p100.Destructor()
 
-# Printing the variables from the respective objects...
-   # attrs = vars(p100)
-   # pprint.pprint(attrs,width=1)
-
-#    print(atmos.items())
-# print(p100.geo['wing'].items())
-#    print(p100.geo['horz'].items())
-#    print(p100.geo['fus'].items())

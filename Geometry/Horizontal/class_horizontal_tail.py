@@ -246,68 +246,69 @@ class Create_Horizontal(object, metaclass=AuxTools):
 
         self.geo['horz']['tcave'] = tc[2] - ((y[2]-self.geo['horz']['ycma'])/ \
                                     (y[2]-y[0]))*(tc[2]-tc[0])
-            
-#
-#---- Printing data
-        if self.screen_flag == True:
-            print('  |-------------------------------------------------|')
-            print('  |           Reference Horizontal Tail             |')
-            print('  |-------------------------------------------------|')
-            print('   Sref          [m2]   --> ' + "{0:.3f}".                 \
+
+#----------------------------------------------------------------------#
+#                Printing the Horizontal Tail Geo on the Screen        #
+#----------------------------------------------------------------------#
+    def Print_HTGeo(self):            
+
+        print('  |-------------------------------------------------|')
+        print('  |           Reference Horizontal Tail             |')
+        print('  |-------------------------------------------------|')
+        print('   Sref          [m2]   --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['sref']))
             
-            print('   AR            [-]    --> ' + "{0:.3f}".                 \
+        print('   AR            [-]    --> ' + "{0:.3f}".                 \
                                                 format(self.geo['horz']['ar']))
             
-            print('   Taper         [-]    --> ' + "{0:.3f}".                 \
+        print('   Taper         [-]    --> ' + "{0:.3f}".                 \
                                              format(self.geo['horz']['taper']))
             
-            print('   Dihedral      [deg]  --> ' + "{0:.3f}".                 \
+        print('   Dihedral      [deg]  --> ' + "{0:.3f}".                 \
                                           format(self.geo['horz']['dihedral']))
             
-            print('   Sweep1/4      [deg]  --> ' + "{0:.3f}".                 \
+        print('   Sweep1/4      [deg]  --> ' + "{0:.3f}".                 \
                                            format(self.geo['horz']['sweep14']))
             
-            print('   X_Appex       [m]    --> ' + "{0:.3f}".                 \
+        print('   X_Appex       [m]    --> ' + "{0:.3f}".                 \
                                      format(self.geo['horz']['appex_14croot']))
             
-            print('   Horz_CMA      [m]    --> ' + "{0:.3f}".                 \
+        print('   Horz_CMA      [m]    --> ' + "{0:.3f}".                 \
                                                format(self.geo['horz']['cma']))
             
-            print('   Horz_YCMA     [m]    --> ' + "{0:.3f}".                 \
+        print('   Horz_YCMA     [m]    --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['ycma']))
             
-            print('   Horz_XCMA     [m]    --> ' + "{0:.3f}".                 \
+        print('   Horz_XCMA     [m]    --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['xcma']))        
             
-            print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".                 \
+        print('   Sweep_LE      [deg]  --> ' + "{0:.3f}".                 \
                                            format(self.geo['horz']['sweeple']))
             
-            print('   Sweep_TE      [deg]  --> ' + "{0:.3f}".                 \
+        print('   Sweep_TE      [deg]  --> ' + "{0:.3f}".                 \
                                            format(self.geo['horz']['sweepte']))
             
-            print('   Swet          [m2]   --> ' + "{0:.3f}".                 \
+        print('   Swet          [m2]   --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['swet']))        
             
-            print('   t/c_Root      [-]    --> ' + "{0:.3f}".                 \
+        print('   t/c_Root      [-]    --> ' + "{0:.3f}".                 \
                                            format(self.geo['horz']['th_root']))
             
-            print('   t/c_Tip       [-]    --> ' + "{0:.3f}".                 \
+        print('   t/c_Tip       [-]    --> ' + "{0:.3f}".                 \
                                             format(self.geo['horz']['th_tip']))
             
-            print('   Width Fus     [m]    --> ' + "{0:.3f}".                 \
+        print('   Width Fus     [m]    --> ' + "{0:.3f}".                 \
                                          format(self.geo['horz']['width_fus']))
             
-            print('   Span          [m]    --> ' + "{0:.3f}".                 \
+        print('   Span          [m]    --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['span']))
             
-            print('   Croot         [m]    --> ' + "{0:.3f}".                 \
+        print('   Croot         [m]    --> ' + "{0:.3f}".                 \
                                              format(self.geo['horz']['croot']))
             
-            print('   Ctip          [m]    --> ' + "{0:.3f}".                 \
+        print('   Ctip          [m]    --> ' + "{0:.3f}".                 \
                                               format(self.geo['horz']['ctip']))
             
-            print('                                                          ')            
+        print('                                                          ')            
 
-        pass
       
