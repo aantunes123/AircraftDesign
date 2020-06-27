@@ -246,7 +246,9 @@ class Create_Aircraft(Create_Wing,
     def Compute_Weight(self,airprop):
         """
             This method perform the iterative process to get the MTWO of the 
-            aircraft. It starts with a very low MTOW and keep raising 
+            aircraft. It starts with a very low MTOW and keep raising until the
+            guess MTOW converges to the right value. Here the concept is the
+            one described on ROSKAN book No.02.
         
         """
         fmin(self.Converge_Weight,3000,args=(airprop,),maxiter = 1000,ftol=2.0)         
@@ -264,13 +266,10 @@ class Create_Aircraft(Create_Wing,
 
         """
 
-#        component = ('wing','horz','vert')
 #        phases    = ('climb','cruise','landing')
-
-        components = ('wing', 'horz', 'vert')
         phases = ('landing')
 
-        self.FrictionDrag(airprop, components, phases)
+        self.FrictionDrag(airprop, phases)
 
 #
 #---- Printing data

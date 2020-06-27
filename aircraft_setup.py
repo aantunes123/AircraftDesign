@@ -82,16 +82,26 @@ if __name__ == '__main__':
 
 # Flight Conditions and computing the Atmospheric Properties
     atmos = Flight_Setup('.\\Input_files\\flight_cond.inp')
+
+
+# Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
+    p100.Compute_Geometry()
+
+# Computing the Weight...
+    p100.Compute_Weight(atmos)
+
+# Computing the Drag....
+    p100.Compute_Drag(atmos)
  
 # ------  Optimization Gradient Here 
-    x = 90.0
-    res = minimize(Aircraft_Opt, x, args=atmos, method='BFGS',                \
-                    bounds=((80.0,120.0)),                                    \
-                    options={'gtol': 1e-6,                                    \
-                             'disp': True,                                    \
-                             'iprint': 1,                                     \
-                             'eps': 0.05,                                     \
-                             'maxiter': 400})
+#    x = 90.0
+#    res = minimize(Aircraft_Opt, x, args=atmos, method='BFGS',                \
+#                    bounds=((80.0,120.0)),                                    \
+#                    options={'gtol': 1e-6,                                    \
+#                             'disp': True,                                    \
+#                             'iprint': 1,                                     \
+#                             'eps': 0.05,                                     \
+#                             'maxiter': 400})
 
 # -----    Optimization GA Here 
 
