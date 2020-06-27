@@ -1,22 +1,3 @@
 ### Geometry Classes
 Here are the directories where the user will find the classes that define the geometrical definition of the main components for the aircraft: wing, HT, VT, fuselage, pylon and nacelle.
 
-``` 
-Compute_Geometry
-``` 
-
-``` 
-Compute_Weight
-``` 
-
-``` 
-Compute_Drag
-``` 
-
-``` 
-Compute_Performance
-``` 
-
-``` 
-Compute_Flight_Mechanics
-``` 
