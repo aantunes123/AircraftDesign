@@ -1,8 +1,5 @@
 ### Class Aircraft
-In this class the user will find the methods responsible to create the aircraft geometry
-compute the weight, the drag, the performance and the flight mechanics. This methods are
-called in the aircraft_setup.py which the main part of the code. The important methods on
-this class are:
+In this class the user will find the methods responsible to create the aircraft geometry compute the weight, the drag, the performance and the flight mechanics. These methods can be called on the aircraft_setup.py which consirs the main interface with the user. It is on this code that the user will mount its optimization problem. The important methods on this class are: 
 
 ``` 
 Compute_Geometry
