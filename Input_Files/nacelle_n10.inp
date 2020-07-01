@@ -7,10 +7,15 @@
 #   dfan            --> nacelle fan diameter             [in]    [real]      #
 #   lmax            --> nacelle length                   [in]    [real]      #
 #   tc              --> nacelle rel. thickness            [-]    [real]      #
+#   engine_w        --> engine weight                    [Kg]    [real]      #
+#   engine_sfc      --> specific fuel consumption [Kgf/kgf-h]    [real]      #
+#   engine_thurst   --> maximum single engine thrust SL   [N]    [real]      #
+#   engine_bypass   --> baypass ratio                     [-]    [real]      #
 #                                                                            #
-#----------------------------------------------------------------------------! #
+#----------------------------------------------------------------------------#
 type            =     1
 no              =     2
 dfan            =    69.800
 lmax            =   136.000 
 tc              =     0.080
+engine_w        =  6300.000
