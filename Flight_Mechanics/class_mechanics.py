@@ -26,14 +26,17 @@ from Auxilliary.class_aux import AuxTools
 #----------------------------------------------------------------------#
 class Flight_Mechanics(object, metaclass=AuxTools):
     """
-        Aircraft Weight - The call SUPER does not contains the *args, **kwargs 
+
+        The call SUPER does not contains the *args, **kwargs 
         because it is the last Father Class passed to Aircraft Class.    
+        
+        
     """
         
     def __init__(self, geo,*args, **kwargs):
         super(Flight_Mechanics, self).__init__()        
 
-
+#------------------------------------------------------------------------------
     def Trim(self):
 
         self.mechanics['TailV'] = ( ((self.geo['horz']['xcma']          +     \
