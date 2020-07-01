@@ -26,6 +26,7 @@
 
 """
 from Auxilliary.class_aux import AuxTools
+import numpy as np
 
 #----------------------------------------------------------------------#
 #                     NACELLE CREATE CLASS                             #
@@ -72,15 +73,31 @@ class Create_Nacelle(object, metaclass=AuxTools):
                 if str(vvars[i].strip()) == str(key.strip()):
                     self.geo['nacelle'][key] = float(vvals[i])
    
+#------------------------------------------------------------------------------
+    def Nacelle(self):
 
+# inches to meters...
+        self.geo['nacelle']['dfan']  = self.geo['nacelle']['dfan'] * 0.0254
+        self.geo['nacelle']['lmax']  = self.geo['nacelle']['lmax'] * 0.0254
+
+        if self.geo['nacelle']['type'] == 1 :
+            nac_dav = 1.30 * self.geo['nacelle']['dfan']
+            self.geo['nacelle']['swet'] = np.pi * nac_dav *                   \
+                                          self.geo['nacelle']['lmax'] * 1.10                
+        else:
+             nac_dav   = 1.35 * self.geo['nacelle']['dfan']
+             self.geo['nacelle']['swet'] = np.pi * nac_dav *                  \
+                                           self.geo['nacelle']['lmax'] * 1.10 
+    
 #----------------------------------------------------------------------#
 #                 Print the Nacelle Component                          #
 #----------------------------------------------------------------------#    
     def Print_Nacelle(self):
+        print(' ')
         print('  |-------------------------------------------------|')
         print('  |               Nacelle Geometry                  |')
         print('  |-------------------------------------------------|')
-        print('   Type          [m]    --> ' + "{0:.3f}".format(          \
+        print('   Type          [-]    --> ' + "{0:.3f}".format(          \
                                                   self.geo['nacelle']['type']))
         print('   Number        [-]    --> ' + "{0:.3f}".format(          \
                                                     self.geo['nacelle']['no']))
@@ -89,5 +106,9 @@ class Create_Nacelle(object, metaclass=AuxTools):
                                                   self.geo['nacelle']['dfan']))
         print('   Length        [m]    --> ' + "{0:.3f}".format(          \
                                                   self.geo['nacelle']['lmax']))
-        print('   T/C           [m]    --> ' + "{0:.3f}".format(          \
-                                                      self.geo['nacelle']['tc']))                 
+        print('   T/C           [-]    --> ' + "{0:.3f}".format(          \
+                                                    self.geo['nacelle']['tc'])) 
+                
+        print('   Swet         [m2]    --> ' + "{0:.3f}".format(          \
+                                                  self.geo['nacelle']['swet'])) 
+        
