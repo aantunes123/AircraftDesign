@@ -20,19 +20,19 @@
 #   sections       --> wing No. of stations                 [-]  [int.]      #
 #                                                                            #
 #----------------------------------------------------------------------------#
-sref                =  90.0000
-ar                  =   09.0000
-sweep14             =  25.05913
-taper               =   0.2830
-dihedral            =   5.00000
-kink                =   0.39282
-tcroot              =   0.1425
-tckink              =   0.1150
-tctip               =   0.1038
+sref                =   92.529
+ar                  =   08.337
+sweep14             =  23.5430
+taper               =   0.2806
+dihedral            =   5.0000
+kink                =   0.3686
+tcroot              =   0.1220
+tckink              =   0.1090
+tctip               =   0.1050
 stubwidth           =   3.50000
-xappex              =  00.00000
+xappex              =  10.00000
 yappex              =  -1.23000
 spar_LE             =   0.20
 spar_TE             =   0.60
 tank_y              =   0.70
-sections            =   10
+sections            =   4
