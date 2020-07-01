@@ -64,7 +64,7 @@ def Plot_Figure(flag_plot,flag_time,comp1):
 
         fig = plt.figure(figsize=(8,8))
         plt.title('Aircraft Planform')
-        plt.xlim([0,30])
+        plt.xlim([0,20])
         plt.plot(yref1,xref1)
         plt.plot(ykink,xkink)
         plt.plot(yht,xht)        
@@ -77,8 +77,8 @@ def Plot_Figure(flag_plot,flag_time,comp1):
 
         fig2 = plt.figure(figsize=(8,8))
         plt.title('Aircraft Planform')
-        plt.xlim([0,30])
-        plt.ylim([-2,3])        
+        plt.xlim([0,20])
+        plt.ylim([-4,4])        
         plt.plot(ykink,zkink)
         plt.xlabel('y')
         plt.ylabel('Z')
