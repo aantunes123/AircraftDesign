@@ -75,7 +75,7 @@ class Create_Wing(object, metaclass=AuxTools):
         self.geo['wing']['yappex']     = -1.230
         self.geo['wing']['spar_LE']    =  0.20
         self.geo['wing']['spar_TE']    =  0.70
-        self.geo['wing']['tank_y']     =  0.70        
+        self.geo['wing']['tank_y']     =  0.75       
         self.geo['wing']['sections']   =  4
 
         vvars = list()
@@ -149,6 +149,7 @@ class Create_Wing(object, metaclass=AuxTools):
 #--- ...to List()...using a list is easier to later add new sections...
         for i in range(0,4):
             self.geo['wing']['x'].append(str(x[i]))
+
 #
 #---- Computation of the chords...
 
@@ -157,7 +158,6 @@ class Create_Wing(object, metaclass=AuxTools):
         chords[0]                  = self.geo['wing']['croot']
         chords[1]                  = self.geo['wing']['croot'] + (self.geo['wing']['ctip'] - self.geo['wing']['croot']) * \
                                                                    ((y[1]-y[0])/(y[3]-y[0]))
-
         chords[2]                  = self.geo['wing']['croot'] + (self.geo['wing']['ctip'] - self.geo['wing']['croot']) * \
                                                                    ((y[2]-y[0])/(y[3]-y[0]))
         chords[3]                  = self.geo['wing']['ctip']
@@ -166,12 +166,17 @@ class Create_Wing(object, metaclass=AuxTools):
         for i in range(0,4):
             self.geo['wing']['chords'].append(str(chords[i]))
 
-#
+#---- Computation of the XTE...
+        xte    = np.zeros(4)
+        xte[0] = x[0] + chords[0] 
+        xte[1] = x[1] + chords[1] 
+        xte[2] = x[2] + chords[2] 
+        xte[3] = x[3] + chords[3] 
+
 #---- Computation of the XTE...
         self.geo['wing']['xte'] = list()
         for i in range(0,4):
-            self.geo['wing']['xte'].append(str(float(self.geo['wing']['x'][i])+float(self.geo['wing']['chords'][i])))
-
+            self.geo['wing']['xte'].append(str(xte[i]))
 #
 #---- Computation of the wing t/c
 
@@ -293,11 +298,11 @@ class Create_Wing(object, metaclass=AuxTools):
                           (float(self.geo['wing']['y'][2])-float(self.geo['wing']['y'][0]))  )
         chords[3]   = self.geo['Kink_wing']['ctip']
         
-        xte[0]      = -(float(self.geo['wing']['x'][0])- self.geo['wing']['xappex']) -  chords[0]
-        xte[1]      = -(float(self.geo['wing']['x'][1])- self.geo['wing']['xappex']) -  chords[1] 
-        xte[2]      = -(float(self.geo['wing']['x'][2])- self.geo['wing']['xappex']) -  chords[2] 
-        xte[3]      = -(float(self.geo['wing']['x'][3])- self.geo['wing']['xappex']) -  chords[3] 
-  
+        xte[0]      = -(float(self.geo['wing']['x'][0])) -  chords[0]
+        xte[1]      = -(float(self.geo['wing']['x'][1])) -  chords[1] 
+        xte[2]      = -(float(self.geo['wing']['x'][2])) -  chords[2] 
+        xte[3]      = -(float(self.geo['wing']['x'][3])) -  chords[3] 
+
         m1          =  -(float(self.geo['wing']['xte'][0])-float(self.geo['wing']['xte'][2])) /                \
                         (float(self.geo['wing']['y'][0])-float(self.geo['wing']['y'][2]))
                         
@@ -328,7 +333,9 @@ class Create_Wing(object, metaclass=AuxTools):
     def Wing_TE_Kink(self):
 
 # First thing is to converge the area...
-        print('Computing the Real Wing Planform -- Minimizing the Error to get Wing_Ref_Swet == Wing_Real_Swet')
+        print(' ')
+        print('Computing the Real Wing Planform...Wing_Ref_Swet = Wing_Real_Swet')
+        print(' ')
         fmin(self.Converge_Wing_Area,2.0)
        
 # Defining the lists...
