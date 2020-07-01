@@ -58,8 +58,7 @@ def Aircraft_Opt(x,*args,**kargs):
 # Computing the Drag....
   #  p100.Compute_Drag(atmos)
 
-#    return x
-    return abs(p100.weight['wing']['Maxfuel']-p100.weight['fuel'])
+    return abs(p100.perf['curr_range']-p100.perf['range'])
 
 
 # -----------------------------------------------------------------------------
@@ -84,24 +83,37 @@ if __name__ == '__main__':
     atmos = Flight_Setup('.\\Input_files\\flight_cond.inp')
 
 
+# (1) Analysis,   (2) Optimization
+
+    flag = 1
+    
+    if flag == 1:
 # Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
-    p100.Compute_Geometry()
+        p100.Compute_Geometry()
 
 # Computing the Weight...
-    p100.Compute_Weight(atmos)
+        p100.Compute_Weight(atmos)
 
 # Computing the Drag....
-    p100.Compute_Drag(atmos)
- 
+        p100.Compute_Drag(atmos)
+
+
+# Computing the Propulsion System...
+        p100.Compute_Propulsion()
+
+# Plotting the Geometry PlanForm
+#    Plot_Figure(True, 3, p100)
+
+    else: 
 # ------  Optimization Gradient Here 
-#    x = 90.0
-#    res = minimize(Aircraft_Opt, x, args=atmos, method='BFGS',                \
-#                    bounds=((80.0,120.0)),                                    \
-#                    options={'gtol': 1e-6,                                    \
-#                             'disp': True,                                    \
-#                             'iprint': 1,                                     \
-#                             'eps': 0.05,                                     \
-#                             'maxiter': 400})
+        x = 90.0
+        res = minimize(Aircraft_Opt, x, args=atmos, method='BFGS',            \
+                       bounds=((80.0,120.0)),                                 \
+                       options={'gtol': 1e-6,                                 \
+                                'disp': True,                                 \
+                                'iprint': 1,                                  \
+                                'eps': 0.05,                                  \
+                                'maxiter': 400})
 
 # -----    Optimization GA Here 
 
@@ -110,7 +122,5 @@ if __name__ == '__main__':
 
     # ga.Opt_SGA(Aircraft_Opt)                       # Calling the SGA Method
 
-# Plotting the Geometry
-#    Plot_Figure(True, 3, p100)
 
 
