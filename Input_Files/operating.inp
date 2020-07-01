@@ -9,8 +9,8 @@
 #   MTOW                --> Maximum Takeoff Weight        [Kg][real]         #
 #                                                                            #
 #----------------------------------------------------------------------------#
-no_pass             =  102
+no_pass             =  80
 ncrew               =    4
 pass_weight         =  100.0
 freight_weight      =  1200.0
-mtow                = 52000.0
+mtow                = 46471.0
