@@ -11,12 +11,12 @@
 #   appex_14croot  --> appex at 1/4 of the VT_Croot            [m]  [real]   #
 #                                                                            #
 #----------------------------------------------------------------------------#
-sref                =  16.210
-ar                  =   1.710
+sref                =  16.205
+ar                  =   1.714
 sweep14             =  35.000
-taper               =   0.310
-th_root             =   0.110
-th_tip              =   0.110
+taper               =   0.308
+th_root             =   0.120
+th_tip              =   0.100
 appex_14croot       =  30.930
 
 profiles            =   2
