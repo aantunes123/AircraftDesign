@@ -36,6 +36,7 @@ from Geometry.Nacelle.class_nacelle import Create_Nacelle
 from Geometry.Pylon.class_pylon import Create_Pylon
 from Aerodynamics.class_aerocoef import Coefficients
 from Performance.class_performance import Performance
+from Propulsion.class_propulsion import Propulsion
 from Flight_Mechanics.class_mechanics import Flight_Mechanics
 from Weight.class_weight import Weight
 from Operation.class_operation import Oper_Items
@@ -60,6 +61,7 @@ class Create_Aircraft(Create_Wing,
                       Coefficients,
                       Weight,
                       Performance,
+                      Propulsion,
                       Oper_Items,
                       Flight_Mechanics):
 
@@ -75,17 +77,19 @@ class Create_Aircraft(Create_Wing,
         self.screen_flag = kwargs['Screen']
 
 # Initializing the Dictionaries....
-        self.geo = {}
-        self.weight = {}
-        self.mechanics = {}
-        self.perf = {}
-        self.operating = {}
+        self.geo        = {}
+        self.weight     = {}
+        self.mechanics  = {}
+        self.perf       = {}
+        self.operating  = {}
+        self.propulsion = {}
 
         super(Create_Aircraft, self).__init__(self.geo,
                                               self.weight,
                                               self.perf,
                                               self.operating,
                                               self.mechanics,
+                                              self.propulsion,
                                               *args, **kwargs)
 
 # This file contains the output information from the performed analysis.
@@ -168,10 +172,10 @@ class Create_Aircraft(Create_Wing,
         self.Fus_Torenbeek()
 
 # Calling the Method to Compute the Nacelle Geometry - Class Create_Nacelle.
-       # self.Nacelle()
+        self.Nacelle()
 
 # Calling the Method to Compute the Pylon Geometry - Class Create_Pylon.
-       # self.Pylon()
+        self.Pylon()
 
 # Calling the rendering Method
       #  Rendering(self)
@@ -201,6 +205,9 @@ class Create_Aircraft(Create_Wing,
         self.weight['mtow'] = mtow0
         airprop             = args[0]
         
+# Fuel Tank Weight.
+        self.Fuel_Tank_Weight()
+        
 # Usuable Fuel...
         self.Usable_Fuel_Weight(airprop)
         
@@ -222,9 +229,6 @@ class Create_Aircraft(Create_Wing,
 # Fuselage Weight.
         self.Fus_Weight(airprop)
 
-# Fuel Tank Weight.
-        self.Fuel_Tank_Weight()
-
 # Miscellaneous Weight.
         self.Miscellaneous_Weight()
 
@@ -239,7 +243,7 @@ class Create_Aircraft(Create_Wing,
 #  be equal to zero.... Another important check is the difference between the 
 #  wing fuel capacity and the requirent fuel to accomplish the mission.
 #
-       
+        #print(self.weight['total'],self.weight['mtow'],self.weight['fuel'],self.weight['wing']['Maxfuel'])
         return abs(self.weight['total'] - self.weight['mtow'])
 
 # -----------------------------------------------------------------------------
@@ -251,8 +255,13 @@ class Create_Aircraft(Create_Wing,
             one described on ROSKAN book No.02.
         
         """
-        fmin(self.Converge_Weight,3000,args=(airprop,),maxiter = 1000,ftol=2.0)         
-
+        print(' ')
+        print('Converging MTOW....Roskan concept')
+        print(' ')
+        
+        fmin(self.Converge_Weight,52000,args=(airprop,),maxiter = 1000,ftol=2.0) 
+        print(' ')        
+       # self.Converge_Weight(52000,airprop)
 #
 #---- Printing data
         if self.screen_flag == True:
@@ -267,9 +276,10 @@ class Create_Aircraft(Create_Wing,
         """
 
 #        phases    = ('climb','cruise','landing')
-        phases = ('landing')
+        phases = ('cruise')
 
         self.FrictionDrag(airprop, phases)
+        self.InducedDrag()
 
 #
 #---- Printing data
@@ -299,8 +309,19 @@ class Create_Aircraft(Create_Wing,
             The Class Performance must be implemented.
 
         """
+        self.Compute_Mission()
 
-        self.Converge_MTOW()
+
+# -----------------------------------------------------------------------------
+
+    def Compute_Propulsion(self):
+        """
+            Computing the perforamnce computation.
+
+            The Class Performance must be implemented.
+
+        """
+        self.RubberEngine()
 
 # -----------------------------------------------------------------------------
 
