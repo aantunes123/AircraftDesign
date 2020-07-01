@@ -18,11 +18,14 @@
 
     Here the Pylon geometry is created.
 
+   nac_type        --> nacelle type: (1)short / (2)long  [-] [integer]  
    croot           --> pylon root chord                  [m]    [real]  
    ctip            --> pylon tip chord                   [m]    [real]  
    len             --> pylon length                      [m]    [real]  
    sweep           --> pylon sweep angle               [deg]    [real]  
    tc              --> pylon relative thickness          [m]    [real]      
+
+
 
 """
 from Auxilliary.class_aux import AuxTools
@@ -46,11 +49,12 @@ class Create_Pylon(object, metaclass=AuxTools):
 # Data for the wing...some setup to avoid crashing
 
         self.geo['pylon']            = {}  
+        self.geo['pylon']['type']    =   1
         self.geo['pylon']['croot']   =   5.3953
         self.geo['pylon']['ctip']    =   4.3090
         self.geo['pylon']['len']     =   0.5144
         self.geo['pylon']['sweep']   = -84.6000
-        self.geo['pylon']['tc']      =    0.1020
+        self.geo['pylon']['tc']      =   0.1020
 
         vvars = list()
         vvals = list()
@@ -74,9 +78,21 @@ class Create_Pylon(object, metaclass=AuxTools):
    
 
         pass
-#----------------------------------------------------------------------#
-#                 Print the Pylon Component                            #
-#----------------------------------------------------------------------#    
+#------------------------------------------------------------------------------
+    def Pylon(self):
+        
+        self.geo['pylon']['pyl_cma']  =  (self.geo['pylon']['croot']  +       \
+                                         self.geo['pylon']['ctip']) * 0.50
+
+        if self.geo['nacelle']['type'] == 1:
+            self.geo['pylon']['sweet'] = 2.0 * self.geo['pylon']['len'] *     \
+                                         2.0 * self.geo['pylon']['pyl_cma']
+        else:
+            self.geo['pylon']['sweet'] = self.geo['pylon']['len'] *           \
+                                         2.0 * self.geo['pylon']['pyl_cma']                     
+
+
+#------------------------------------------------------------------------------
     def Print_Pylon(self):
         print('  |-------------------------------------------------|')
         print('  |               Pylon Geometry                    |')
@@ -88,10 +104,11 @@ class Create_Pylon(object, metaclass=AuxTools):
 
         print('   Length        [m]    --> ' + "{0:.3f}".format(          \
                                                      self.geo['pylon']['len']))
-        print('   Sweep         [m]    --> ' + "{0:.3f}".format(          \
+        print('   Sweep       [deg]    --> ' + "{0:.3f}".format(          \
                                                    self.geo['pylon']['sweep']))
-        print('   T/C           [m]    --> ' + "{0:.3f}".format(          \
+        print('   T/C           [-]    --> ' + "{0:.3f}".format(          \
                                                       self.geo['pylon']['tc']))
-
-        
-#           print('Pylon data: ',self.geo['pylon'])                        
+        print('   CMA           [m]    --> ' + "{0:.3f}".format(          \
+                                                 self.geo['pylon']['pyl_cma']))
+        print('   SWET         [m2]    --> ' + "{0:.3f}".format(          \
+                                                   self.geo['pylon']['sweet']))     
