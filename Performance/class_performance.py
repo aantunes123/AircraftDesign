@@ -73,3 +73,7 @@ class Performance(object, metaclass=AuxTools):
                 if str(vvars[i].strip()) == str(key.strip()):
                     self.perf[key] = float(vvals[i])
 
+#------------------------------------------------------------------------------    
+    def Compute_Mission(self):
+        
+        pass
