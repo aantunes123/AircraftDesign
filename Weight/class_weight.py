@@ -50,14 +50,16 @@ class Weight(object, metaclass=AuxTools):
 # some of the aircraft components. Later the value is updated in an iteractive
 # process.
 
-        self.weight['mtow']  =  self.operating['mtow'] 
-        self.weight['fus']   =  {}
-        self.weight['vert']  =  {}
-        self.weight['horz']  =  {}  
-        self.weight['misc']  =  {}    
-        self.weight['wing']  =  {}            
+        self.weight['mtow']           =  self.operating['mtow'] 
+        self.weight['engine']         =  self.propulsion['weight']
+        self.weight['freight_weight'] = self.operating['freight_weight']
+        
+        self.weight['fus']    =  {}
+        self.weight['vert']   =  {}
+        self.weight['horz']   =  {}  
+        self.weight['misc']   =  {}    
+        self.weight['wing']   =  {}            
 
-            
 #----------------------------------------------------------------------
     def Diving_Velocity(self,airprop,phase):
         
@@ -94,14 +96,14 @@ class Weight(object, metaclass=AuxTools):
         key = 'cruise'
         vel_diving = self.Diving_Velocity(airprop,key)
         
-        kht = 0.70
+        kht = 0.783
         fht = (vel_diving/1000) * np.power(self.geo['horz']['sref'],0.2)/     \
-               np.cos(pi*self.geo['horz']['sweep14']/180.0)*kht
+               np.cos(pi*self.geo['horz']['sweep14']/180.0)
               
         self.weight['horz']['total'] = (-86.045*(np.power(fht,2.0)) +         \
                                          127.4*fht-16.803)          *         \
-                                         self.geo['horz']['sref']
-                               
+                                         self.geo['horz']['sref'] * kht
+
 #----------------------------------------------------------------------#
 #                    Computing the VT Weight                           #
 #----------------------------------------------------------------------#
@@ -119,13 +121,13 @@ class Weight(object, metaclass=AuxTools):
         key = 'cruise'
         vel_diving = self.Diving_Velocity(airprop,key)
         
-        kvt = 0.70  
+        kvt = 0.71 
         fvt = (vel_diving/1000) * np.power(self.geo['vert']['sref'],0.2)/     \
-               np.cos(pi*self.geo['vert']['sweep14']/180.0)*kvt
+               np.cos(pi*self.geo['vert']['sweep14']/180.0)
               
         self.weight['vert']['total'] = (-86.045*(np.power(fvt,2.0)) +         \
                                          127.4*fvt-16.803) *                  \
-                                        self.geo['vert']['sref']
+                                        self.geo['vert']['sref'] *kvt
 
 #----------------------------------------------------------------------#
 #                    Computing the Fuselage Weight                     #
@@ -197,7 +199,7 @@ class Weight(object, metaclass=AuxTools):
                              d2 * np.power(self.weight['mtow'],(3.0/2.0))
 
 #----------------------------------------------------------------------#
-#                              Wing  Weight                            #
+#                          Wing  Weight                                #
 #----------------------------------------------------------------------#
     def Wing_Weight(self):
 
@@ -205,24 +207,32 @@ class Weight(object, metaclass=AuxTools):
 #      Here is the Torenbeek definition of the wing weight - It produced more 
 #      realistic weight values.
 #----
+        kw      = 0.0049
+        nult    = 3.75
+        
+        cs      = np.cos(np.pi*self.geo['wing']['sweep14']/180.0)
+        bs      = self.geo['wing']['span'] / cs
+        brefbs  = self.geo['wing']['span'] / bs
+        tr      = self.geo['wing']['croot'] * self.geo['wing']['tcroot']
+        frac    = ((bs/tr)/(self.weight['mtow']/                              \
+                            self.geo['wing']['sref']))**0.30
+        ww      = kw * np.power(bs,0.75) * (1.0 + brefbs) *                   \
+                  np.power(nult,0.55) * frac
 
-        nult = 3.75   # I need to have this value as an input in the structural
-                      # module.
-        kt   = 0.649
+# This weight already consider the high-lift devices and the ailerons...
+        
+        self.weight['wing']['total']  = ww * self.weight['mtow']   
 
-        self.weight['mzfw'] = self.weight['mtow'] - self.weight['fuel']
-        aux1                = (self.weight['mzfw']*2.204620)
-        aux2                = (self.geo['wing']['span']*3.280830)
-        aux3                = np.cos(np.pi*self.geo['wing']['sweep14']/180.0)
-#
-        self.weight['wing']['total'] = kt * 0.4539240 * ( 0.00170* aux1 * 
-                                                ((aux2/aux3)**0.750) * 
-                                                ((1.0+(6.3*aux3/aux2))**0.5) *   
-                                                (nult**0.550)  * ( aux2*
-                                           (self.geo['wing']['sref']*10.763910)
-                                                  / (self.geo['wing']['tcave']
-                                                  *aux1*aux3))**0.30          )
-                          
+#  Considering the spoilers and the speed breakes and the under wing 
+#  mounted engine...
+        
+        kspoiler     = 1.02
+        kengine      = 0.95
+        kcalibration = 0.98
+        
+        self.weight['wing']['total']  =  kspoiler * kengine * kcalibration *  \
+                                         self.weight['wing']['total']
+        
 #----------------------------------------------------------------------#
 #                      Operational Itens Weight                        #
 #----------------------------------------------------------------------#
@@ -299,7 +309,7 @@ class Weight(object, metaclass=AuxTools):
 
 # Hard-coded must be transfered to input file...
         fuel_density = 0.8030
-        fuel_end_sta = 0.75
+        fuel_end_sta = self.geo['wing']['tank_y']
         y_end        = fuel_end_sta * self.geo['wing']['span'] / 2.0
 
 #
@@ -380,8 +390,8 @@ class Weight(object, metaclass=AuxTools):
         aux1 = self.perf['range'] - (airprop['climb']['velocity']  *          \
                                     self.perf['climb_time'] / 60.0 / 0.51444)       
 
-        ld = 8.0
-        sfc = 0.45
+        ld   = 13.0
+        sfc  = self.propulsion['sfc']
         aux2 = airprop['cruise']['velocity']/ 0.51444 * ld / sfc
         self.perf['cruise_wf'] = 1.0 / np.exp(aux1/aux2)        
 #
@@ -391,18 +401,34 @@ class Weight(object, metaclass=AuxTools):
                           self.perf['takeoff_wf'] * self.perf['climb_wf']  *  \
                           self.perf['cruise_wf'] * self.perf['descend_wf'] *  \
                           self.perf['land_wf'])) * self.weight['mtow']
-        
-#!----   I do not allow the fuel weight to be higher than the total fuel tank capacity...
-#!                      
-#           if(fuel_w.gt.fuel_w_max) then
-#              fuel_w = fuel_w_max + 1.0d0 
-#              range = range - 200.0d0
-#           endif  
-#
 
+# Here the fuel is being limited to 75% of the total amount the fuel the
+# wing can carry + full payload. In case the range demands an amount of 
+# fuel above this limit a message will be displayed on the screen.
 
+        if self.weight['fuel'] > 0.75*self.weight['wing']['Maxfuel']:
+            self.weight['fuel'] = 0.75*self.weight['wing']['Maxfuel']
+            
+# Computing the possible range for this amount of fuel that is limied to 75%
+# of the wing fuel capacity.
+
+            mff    = (1.0 - (self.weight['fuel']/self.weight['mtow']))
+            fother = ( self.perf['warm_wf']    * self.perf['taxi_wf']     *   \
+                       self.perf['takeoff_wf'] * self.perf['climb_wf']    *   \
+                       self.perf['descend_wf'] * self.perf['land_wf']  )
+            f5     = mff / fother
+            new_range = aux2*np.log(1.0/f5) + airprop['climb']['velocity'] * \
+                                 self.perf['climb_time'] / 60.0 / 0.51444
+
+# For optimization purpose...
+            self.perf['curr_range'] = new_range
+            print(new_range)
+
+            print('Maximum range achieved with this number of pax is: {:06.2f}'.format(new_range[0]))
+
+            
 #----------------------------------------------------------------------#
-#                      Method to Converge the Weight                   #
+#                  Method to Converge the Weight                       #
 #----------------------------------------------------------------------#
     def Total_Weight(self):
         
@@ -414,6 +440,7 @@ class Weight(object, metaclass=AuxTools):
                                self.weight['nlg']                  +          \
                                self.weight['oper']                 +          \
                                self.weight['payload']              +          \
+                               self.weight['misc']['furnishing']   +          \
                                self.weight['misc']['icing']        +          \
                                self.weight['misc']['apu']          +          \
                                self.weight['misc']['hydraulics']   +          \
@@ -421,7 +448,10 @@ class Weight(object, metaclass=AuxTools):
                                self.weight['misc']['fire']         +          \
                                self.weight['misc']['escape']       +          \
                                self.weight['misc']['avionics']     +          \
+                               self.weight['engine']               +          \
+                               self.weight['freight_weight']       +          \
                                self.weight['fuel']
+        
 
 #----------------------------------------------------------------------#
 #                Printing the Weight on the Screen                     #
@@ -429,11 +459,8 @@ class Weight(object, metaclass=AuxTools):
     def Print_Weight(self):
 
         print('  |-------------------------------------------------|')
-        print('  |   WEIGHT                                        |')
+        print('  |                  WEIGHT                         |')
         print('  |-------------------------------------------------|')
-
-        print('   Wing               [Kg]  --> ' + "{0:.3f}".format(      \
-                                          float(self.weight['wing']['total'])))
             
         print('   HT                 [Kg]  --> ' + "{0:.3f}".format(      \
                                           float(self.weight['horz']['total'])))
@@ -444,17 +471,29 @@ class Weight(object, metaclass=AuxTools):
         print('   Fuselage           [Kg]  --> ' + "{0:.3f}".format(      \
                                            float(self.weight['fus']['total'])))
 
+        print('   Wing               [Kg]  --> ' + "{0:.3f}".format(      \
+                                          float(self.weight['wing']['total'])))
+
+        print('   Engine             [Kg]  --> ' + "{0:.3f}".format(      \
+                                                 float(self.weight['engine'])))
+
+        print('   Payload            [Kg]  --> ' + "{0:.3f}".format(      \
+                                                float(self.weight['payload'])))          
+
+        print('   Wing Fuel Demanded [Kg]  --> ' + "{0:.3f}".format(      \
+                                                   float(self.weight['fuel'])))
+        
+        print('   Operational        [Kg]  --> ' + "{0:.3f}".format(      \
+                                                   float(self.weight['oper'])))
+
         print('   Main Landing Gear  [Kg]  --> ' + "{0:.3f}".format(      \
                                                     float(self.weight['mlg'])))
 
         print('   Nose Landing Gear  [Kg]  --> ' + "{0:.3f}".format(      \
                                                     float(self.weight['nlg'])))
-            
-        print('   Operational        [Kg]  --> ' + "{0:.3f}".format(      \
-                                                   float(self.weight['oper'])))
-            
-        print('   Payload            [Kg]  --> ' + "{0:.3f}".format(      \
-                                                float(self.weight['payload'])))          
+
+        print('   Furnishing         [Kg]  --> ' + "{0:.3f}".format(      \
+                                     float(self.weight['misc']['furnishing'])))
             
         print('   Icing System       [Kg]  --> ' + "{0:.3f}".format(      \
                                           float(self.weight['misc']['icing'])))          
@@ -479,9 +518,9 @@ class Weight(object, metaclass=AuxTools):
             
         print('   Wing MaxFuel       [Kg]  --> ' + "{0:.3f}".format(      \
                                         float(self.weight['wing']['Maxfuel'])))
-
-        print('   Wing Fuel Demanded [Kg]  --> ' + "{0:.3f}".format(      \
-                                                   float(self.weight['fuel'])))
+        
+        print('   Freight            [Kg]  --> ' + "{0:.3f}".format(      \
+                                         float(self.weight['freight_weight'])))
 
         print('   MTOW               [Kg]  --> ' + "{0:.3f}".format(      \
                                                    float(self.weight['mtow'])))
