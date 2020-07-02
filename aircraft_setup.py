@@ -102,7 +102,7 @@ if __name__ == '__main__':
         p100.Compute_Propulsion()
 
 # Plotting the Geometry PlanForm
-#    Plot_Figure(True, 3, p100)
+    #    Plot_Figure(True, 3, p100)
 
     else: 
 # ------  Optimization Gradient Here 
