@@ -85,10 +85,10 @@ class Create_Pylon(object, metaclass=AuxTools):
                                          self.geo['pylon']['ctip']) * 0.50
 
         if self.geo['nacelle']['type'] == 1:
-            self.geo['pylon']['sweet'] = 2.0 * self.geo['pylon']['len'] *     \
+            self.geo['pylon']['swet'] = 2.0 * self.geo['pylon']['len'] *     \
                                          2.0 * self.geo['pylon']['pyl_cma']
         else:
-            self.geo['pylon']['sweet'] = self.geo['pylon']['len'] *           \
+            self.geo['pylon']['swet'] = self.geo['pylon']['len'] *           \
                                          2.0 * self.geo['pylon']['pyl_cma']                     
 
 
@@ -111,4 +111,4 @@ class Create_Pylon(object, metaclass=AuxTools):
         print('   CMA           [m]    --> ' + "{0:.3f}".format(          \
                                                  self.geo['pylon']['pyl_cma']))
         print('   SWET         [m2]    --> ' + "{0:.3f}".format(          \
-                                                   self.geo['pylon']['sweet']))     
+                                                   self.geo['pylon']['swet']))     
