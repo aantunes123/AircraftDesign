@@ -422,7 +422,6 @@ class Weight(object, metaclass=AuxTools):
 
 # For optimization purpose...
             self.perf['curr_range'] = new_range
-            print(new_range)
 
             print('Maximum range achieved with this number of pax is: {:06.2f}'.format(new_range[0]))
 
