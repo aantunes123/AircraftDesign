@@ -40,7 +40,7 @@ from Propulsion.class_propulsion import Propulsion
 from Flight_Mechanics.class_mechanics import Flight_Mechanics
 from Weight.class_weight import Weight
 from Operation.class_operation import Oper_Items
-from Plotting.plot import Rendering
+
 
 from scipy.optimize import fmin
 #from Writting.class_writting import Tee
@@ -279,8 +279,16 @@ class Create_Aircraft(Create_Wing,
         phases = ('cruise')
 
         self.FrictionDrag(airprop, phases)
-        self.InducedDrag()
+        self.InducedDrag(airprop,phases)
+        self.WaveDrag(airprop,phases)
 
+# Command to run the case
+       # command = 'avl.exe <  Teste.run'
+       # case = os.path.join(os.getcwd(),command)
+
+# running...
+       # print(case)
+       # os.system(case)        
 #
 #---- Printing data
     #    if self.screen_flag == True:

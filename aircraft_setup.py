@@ -30,16 +30,34 @@
 from Flight_Conditions.flight_cond import Flight_Setup
 from Aircraft.class_aircraft import Create_Aircraft
 from Plotting.plot import Plot_Figure
+from Plotting.plot import Rendering
 from Optimization.GA_Class import Simple_GA
 from Optimization.GA_Setup import GA_Setup
 
 from scipy.optimize import minimize
 from scipy.optimize import fmin
 
+from time import time
+
 #import pprint
 
+# -----------------------------------------------------------------------------
+def Performance(fn):
+    """
+        Decorator to measure the total time spend on the computation:
+        Analysis or Optimization.
+       
+    """
+    def wrapper(*args, **kargs):
+        t1 = time()
+        result = fn(*args, **kargs)
+        t2 = time()
+        print(f'Computation time ', '{:02.6f}'.format(t2-t1),' seconds')
+        return result
+    return wrapper
 
 # -----------------------------------------------------------------------------
+@Performance
 def Aircraft_Opt(x,*args,**kargs):
     """
         This method defines the optimization problem. Thus, the user
@@ -56,13 +74,15 @@ def Aircraft_Opt(x,*args,**kargs):
     p100.Compute_Weight(args[0])
 
 # Computing the Drag....
-  #  p100.Compute_Drag(atmos)
+    p100.Compute_Drag(atmos)
 
     return abs(p100.perf['curr_range']-p100.perf['range'])
 
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
+   
+    t1 = time()
 
     # Creating the Aircraft Object using the Input Files from the respective
     # components....
@@ -104,6 +124,7 @@ if __name__ == '__main__':
 # Plotting the Geometry PlanForm
     #    Plot_Figure(True, 3, p100)
 
+
     else: 
 # ------  Optimization Gradient Here 
         x = 90.0
@@ -122,5 +143,9 @@ if __name__ == '__main__':
 
     # ga.Opt_SGA(Aircraft_Opt)                       # Calling the SGA Method
 
+# Calling the rendering Method
+   # Rendering(p100)
 
-
+    t2 = time()
+    print('    ')
+    print(f'   Computation time', '{:01.3f}'.format(t2-t1),'seconds')

@@ -77,17 +77,15 @@ class Create_Nacelle(object, metaclass=AuxTools):
     def Nacelle(self):
 
 # inches to meters...
-        self.geo['nacelle']['dfan']  = self.geo['nacelle']['dfan'] * 0.0254
-        self.geo['nacelle']['lmax']  = self.geo['nacelle']['lmax'] * 0.0254
+        dfan  = self.geo['nacelle']['dfan'] * 0.0254
+        lmax  = self.geo['nacelle']['lmax'] * 0.0254
 
         if self.geo['nacelle']['type'] == 1 :
-            nac_dav = 1.30 * self.geo['nacelle']['dfan']
-            self.geo['nacelle']['swet'] = np.pi * nac_dav *                   \
-                                          self.geo['nacelle']['lmax'] * 1.10                
+            nac_dav = 1.30 * dfan
+            self.geo['nacelle']['swet'] = np.pi * nac_dav * lmax * 1.10                
         else:
-             nac_dav   = 1.35 * self.geo['nacelle']['dfan']
-             self.geo['nacelle']['swet'] = np.pi * nac_dav *                  \
-                                           self.geo['nacelle']['lmax'] * 1.10 
+             nac_dav   = 1.35 * dfan
+             self.geo['nacelle']['swet'] = np.pi * nac_dav * lmax * 1.10 
     
 #----------------------------------------------------------------------#
 #                 Print the Nacelle Component                          #

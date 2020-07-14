@@ -187,7 +187,7 @@ def Flight_Setup(file_name):
             print('   VEAS         [Knot]    --> ' + "{0:.3f}".format(        \
                                                          flight[keys]['veas']))
           
-            print('   VTAS         [m/s]     --> ' + "{0:.3f}".format(        \
+            print('   VKTAS        [Knot]    --> ' + "{0:.3f}".format(        \
                                                          flight[keys]['vtas']))
           
             print('   AKTS         [Knot]    --> ' + "{0:.3f}".format(        \

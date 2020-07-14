@@ -23,6 +23,12 @@ from OCC.Display.SimpleGui import init_display
 #import pprint
 
 
+from airconics import liftingsurface, engine, fuselage_oml
+import airconics.AirCONICStools as act
+from airconics.Addons.WebServer.TornadoWeb import TornadoWebRenderer
+from IPython.display import display
+
+
 #def plot(flag_plot,flag_time,comp1,comp2):
 def Plot_Figure(flag_plot,flag_time,comp1):    
 
@@ -149,6 +155,7 @@ def Rendering(obj):
                                        Rotation=0,Twist=0,Naca4Profile='0012')
     display.DisplayShape(Af3.Curve, update=True, color='GREEN')
 
+
     surf_wingin  = act.AddSurfaceLoft([Af0, Af1, Af2])
     surf_wingout = act.AddSurfaceLoft([Af2, Af3])    
 
@@ -219,29 +226,35 @@ def Rendering(obj):
 
     surf_VT = act.AddSurfaceLoft([Af0, Af1])
 
-
+    
 #-------------       FUSELAGE    --------------------
-#    NoseLengthRatio=0.182
-#    TailLengthRatio=0.293
 ##
-#    Fus = fuselage_oml.Fuselage(NoseLengthRatio, TailLengthRatio, 
-#                            #Scaling=FuselageScaling,
-#                            Scaling=55.0,                            
-#                            NoseCoordinates=[0., 0., 0],
-#                            CylindricalMidSection=False,
-#                            Maxi_attempt=5)    
-# Note that surf is a TOPO_DS Shape, and hence no surf.Shape is required 
-#for display
+#    fus = fuselage_oml.Fuselage(NoseLengthRatio=0.182, 
+#                                TailLengthRatio=0.293, 
+#                                Scaling=[55.902, 55.902, 55.902], 
+#                                NoseCoordinates=[0.0, 0.0, 0], 
+#                                CylindricalMidSection=False, 
+#                                SimplificationReqd=False, 
+#                                Maxi_attempt=5, 
+#                                construct_geometry=True)
+
+
+# Current Display of the WHTVT
     display.DisplayShape(surf_wingin, update=True)
     display.DisplayShape(surf_wingout, update=True)    
     display.DisplayShape(surf_HT, update=True)        
     display.DisplayShape(surf_VT, update=True)            
+    #display.DisplayShape(fus, update=True)                
+   # fus.Display()
+    start_display()
 
 #    Fus.Build(2)
 #    Fus.Display(display)
+#    renderer = TornadoWebRenderer()
+#    Fin.Display(renderer)
+#    TP.Display(renderer)
+#    display(renderer)
 
 
-    start_display()
 
-pass    
 
