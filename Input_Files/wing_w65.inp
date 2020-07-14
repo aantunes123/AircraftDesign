@@ -20,15 +20,15 @@
 #   sections       --> wing No. of stations                 [-]  [int.]      #
 #                                                                            #
 #----------------------------------------------------------------------------#
-sref                =   92.529
+sref                =   94.529
 ar                  =   08.337
 sweep14             =  23.5430
 taper               =   0.2806
 dihedral            =   5.0000
 kink                =   0.3686
-tcroot              =   0.1220
-tckink              =   0.1090
-tctip               =   0.1050
+tcroot              =   0.1425
+tckink              =   0.1150
+tctip               =   0.1038
 stubwidth           =   3.50000
 xappex              =  10.00000
 yappex              =  -1.23000
