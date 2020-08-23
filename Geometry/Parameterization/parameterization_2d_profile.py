@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -21,7 +22,7 @@ import math as m
 import numpy as np
 
 #------------------------------------------------------------------------------
-def Bezier(input_file, output_file,stations):
+def Bezier_VT(input_file, output_file,stations):
     """
        Bezier Parameterization - Control Points to Define the Geometry.
        

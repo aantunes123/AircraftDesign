@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              

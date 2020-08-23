@@ -52,7 +52,11 @@ class Performance(object, metaclass=AuxTools):
         self.perf['climb_wf']     =    0.980
         self.perf['descend_wf']   =    0.990
         self.perf['land_wf']      =    0.992
+        self.perf['ld']           =   13.000
 
+# Set up an initial value for the L/D ratio at an previous convergence step. 
+        self.perf['ld_old']       =    1.0
+        
         vvars = list()
         vvals = list()
  

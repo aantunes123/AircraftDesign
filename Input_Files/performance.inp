@@ -16,11 +16,12 @@
 #   climb_wf            --> mass fraction warm             [-][real]         #
 #   descend_wf          --> mass fraction warm             [-][real]         #
 #   land_wf             --> mass fraction warm             [-][real]         #
+#   ld                  --> lift to drag ratio @ cruise    [-][real]         #
 #                                                                            #
 #----------------------------------------------------------------------------#
 vd                  =   380.000
 climb_time          =    33.000
-range               =  1511.000
+range               =  2200.000
 fuel_reserve        =     1.000
 warm_wf             =     0.990
 taxi_wf             =     0.990
@@ -28,3 +29,4 @@ takeoff_wf          =     0.995
 climb_wf            =     0.980
 descend_wf          =     0.990
 land_wf             =     0.992 
+ld                  =    13.000

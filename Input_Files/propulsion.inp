@@ -2,7 +2,7 @@
 #                                                                            #
 #                  PROPULSION INPUT VARIABLES                                #
 #                                                                            #
-#   eweight       --> engine weight                    [Kg]    [real]        #
+#   weight        --> engine weight                    [Kg]    [real]        #
 #   sfc          --> specific fuel consumption [Kgf/kgf-h]    [real]         #
 #   thurst       --> maximum single engine thrust SL   [N]    [real]         #
 #   bypass       --> baypass ratio                     [-]    [real]         #
@@ -10,5 +10,5 @@
 #----------------------------------------------------------------------------# 
 weight   =  4800.0000
 sfc      =     0.4500
-thrust   = 93450.0000
+thrust   = 82500.0000
 bypass   =    11.0000

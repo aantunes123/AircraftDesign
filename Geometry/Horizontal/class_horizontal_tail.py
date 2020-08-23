@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -50,17 +51,22 @@ class Create_Horizontal(object, metaclass=AuxTools):
         
 # Data for the wing...some setup to avoid crashing
 
-        self.geo['horz']                    = {}  
-        self.geo['horz']['sref']            =  25.570
-        self.geo['horz']['ar']              =   5.580
-        self.geo['horz']['sweep14']         =  30.200
-        self.geo['horz']['taper']           =   0.260
-        self.geo['horz']['dihedral']        =   8.000
-        self.geo['horz']['th_root']         =   0.120
-        self.geo['horz']['th_tip']          =   0.120
-        self.geo['horz']['width_fus']       =   1.260
-        self.geo['horz']['appex_14croot']   =  29.530   
-        
+        self.geo['horz']                     = {}  
+        self.geo['horz']['sref']             =  25.570
+        self.geo['horz']['ar']               =   5.580
+        self.geo['horz']['sweep14']          =  30.200
+        self.geo['horz']['taper']            =   0.260
+        self.geo['horz']['dihedral']         =   8.000
+        self.geo['horz']['th_root']          =   0.120
+        self.geo['horz']['th_tip']           =   0.120
+        self.geo['horz']['width_fus']        =   1.260
+        self.geo['horz']['appex_14croot']    =  29.530   
+
+        self.geo['horz']['profiles']         =  2
+        self.geo['horz']['parameterization'] =  'cst'   
+        self.geo['horz']['cst_cp']           =  '.\Input_Files\CST_CP_HT.inp'   
+        self.geo['horz']['output_profile']   =  '.\Output_Files\HT_airfoil.dat'         
+                
         vvars = list()
         vvals = list()
 
@@ -79,10 +85,12 @@ class Create_Horizontal(object, metaclass=AuxTools):
         for i in range(0,len(vvars)):
             for key in (self.geo['horz']):
                 if str(vvars[i].strip()) == str(key.strip()):
-                    self.geo['horz'][key] = float(vvals[i])
-   
-        pass
-
+                    if (key == 'parameterization' or key == 'cst_cp'  or   \
+                        key == 'output_profile'):
+                        self.geo['horz'][key] = vvals[i]
+                    else:
+                        self.geo['horz'][key] = float(vvals[i])
+                        
 #----------------------------------------------------------------------#
 #                    Computing the Reference Wing                      #
 #----------------------------------------------------------------------#

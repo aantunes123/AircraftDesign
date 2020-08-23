@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -29,7 +30,7 @@
 """
 import numpy as np
 from Auxilliary.class_aux import AuxTools
-from ..Parameterization.parameterization_2d_profile import Bezier
+from ..Parameterization.parameterization_2d_profile import Bezier_VT
 
 #----------------------------------------------------------------------#
 #                         HORIZONTAL CLASS                             #
@@ -57,7 +58,7 @@ class Create_Vertical(object, metaclass=AuxTools):
         self.geo['vert']['th_root']            =   0.120
         self.geo['vert']['th_tip']             =   0.120
         self.geo['vert']['appex_14croot']      =  29.530   
-        self.geo['vert']['profiles']           =  1
+        self.geo['vert']['profiles']           =  2
         self.geo['vert']['parameterization']   =  'bezier'   
         self.geo['vert']['bezier_cp']          =  '.\Input_Files\Bezier_VT.inp'   
         self.geo['vert']['output_profile']     =  '.\Output_Files\airfoil.dat'         
@@ -86,8 +87,6 @@ class Create_Vertical(object, metaclass=AuxTools):
                     else:
                         self.geo['vert'][key] = float(vvals[i])
                         
-    pass
-
 #----------------------------------------------------------------------#
 #                    Computing the Reference Wing                      #
 #----------------------------------------------------------------------#
@@ -281,6 +280,6 @@ class Create_Vertical(object, metaclass=AuxTools):
 #       Generating the Vertical Tail Profile...
 #
 #---        
-        Bezier(self.geo['vert']['bezier_cp'].strip(),                         \
-               self.geo['vert']['output_profile'].strip(),                    \
-               self.geo['vert']['profiles'])
+        Bezier_VT(self.geo['vert']['bezier_cp'].strip(),                      \
+                  self.geo['vert']['output_profile'].strip(),                 \
+                  self.geo['vert']['profiles'])

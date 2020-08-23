@@ -1,0 +1,26 @@
+#----------------------------------------------------------------------------#
+#                                                                            #
+#                    SLATS/FLAPS INPUT VARIABLES                             #
+#                                                                            #
+#   slat_type           --> slat:  (0)no / (1)yes           [-] [integer]    #
+#   flap_type           --> slat:  (1)single / (2)double    [-] [integer]    #
+#   flap_yinb           --> flap inboard station            [%]    [real]    #
+#   flap_yout           --> flap outboard station           [%]    [real]    #
+#   flap_m_croot        --> chord main flap root            [%]    [real]    #
+#   flap_a_croot        --> chord aft flap root             [%]    [real]    #
+#   flap_m_ctip         --> chord main flap tip             [%]    [real]    #
+#   flap_a_ctit         --> chord aft flap tit              [%]    [real]    #
+#   flap_deflec         --> flap deflection               [deg]    [real]    #
+#                                                                            #
+#----------------------------------------------------------------------------#
+
+slat_type           =   1
+flap_type           =   2
+flap_yinb0          =   0.120
+flap_yout0          =   0.750
+flap_m_croot        =   0.180
+flap_a_croot        =   0.080
+flap_m_ctip         =   0.220
+flap_a_ctip         =   0.080
+flap_takeoff         =  15.0
+flap_landing         =  38.0

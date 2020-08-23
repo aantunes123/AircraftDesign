@@ -79,8 +79,6 @@ def Plot_Figure(flag_plot,flag_time,comp1):
         plt.grid(True)
         fig.show()
         
-        print(ykink,xkink)
-
         fig2 = plt.figure(figsize=(8,8))
         plt.title('Aircraft Planform')
         plt.xlim([0,20])

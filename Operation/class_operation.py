@@ -66,5 +66,4 @@ class Oper_Items(object):
             for key in (self.operating):
                 if str(vvars[i].strip()) == str(key.strip()):
                     self.operating[key] = float(vvals[i])
-        print(self.operating['ncrew'])
         pass   

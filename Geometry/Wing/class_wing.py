@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -113,9 +114,15 @@ class Create_Wing(object, metaclass=AuxTools):
 #
 #---- Initial definitions...
 
-        self.geo['wing']['span']  = np.sqrt(self.geo['wing']['sref']*self.geo['wing']['ar'])
-        self.geo['wing']['croot'] = 2.0 * self.geo['wing']['sref'] /(self.geo['wing']['span']*(1.0+self.geo['wing']['taper']))
-        self.geo['wing']['ctip']  = self.geo['wing']['croot'] * self.geo['wing']['taper']
+        self.geo['wing']['span']  = np.sqrt(self.geo['wing']['sref'] *        \
+                                            self.geo['wing']['ar'])
+        self.geo['wing']['croot'] = 2.0 * self.geo['wing']['sref'] /          \
+                                         (self.geo['wing']['span'] *          \
+                                          (1.0+self.geo['wing']['taper']))
+        self.geo['wing']['ctip']  = self.geo['wing']['croot']  *              \
+                                    self.geo['wing']['taper']
+
+
 #
 #---- Definition of the Y stations along the span...
 
@@ -123,7 +130,8 @@ class Create_Wing(object, metaclass=AuxTools):
         y                          = np.zeros(4)
         y[0]                       = 0.0
         y[1]                       = self.geo['wing']['stubwidth'] / 2.0
-        y[2]                       = self.geo['wing']['span'] * self.geo['wing']['kink'] / 2.0
+        y[2]                       = self.geo['wing']['span'] *               \
+                                     self.geo['wing']['kink'] / 2.0
         y[3]                       = self.geo['wing']['span'] / 2.0
 
 #--- ...to List()...using a list is easier to later add new sections...
@@ -132,19 +140,21 @@ class Create_Wing(object, metaclass=AuxTools):
 #
 #---- Definition of the L.E. coordinate for each Y station...
 
-        self.geo['wing']['x']      = list()
-        x                          = np.zeros(4)
-        x[0]                       = 0.0
-        x[3]                       =  x[0] - (self.geo['wing']['croot']/4.0) - (y[3]-y[0]) * np.tan(self.geo['wing']['sweep14']*np.pi/180) \
-                                           + (self.geo['wing']['ctip']/4.0)
-        x[1]                       =  x[0] + (x[3]-x[0]) * ((y[1]-y[0])/(y[3]-y[0]))
-        x[2]                       =  x[0] + (x[3]-x[0]) * ((y[2]-y[0])/(y[3]-y[0]))
+        self.geo['wing']['x']  = list()
+        x                      = np.zeros(4)
+        x[0]                   = 0.0
+        x[3]                   =  x[0] - (self.geo['wing']['croot']/4.0) -    \
+                                 (y[3]-y[0]) *                                \
+                                 np.tan(self.geo['wing']['sweep14']*np.pi/180)\
+                                 + (self.geo['wing']['ctip']/4.0)
+        x[1]                   = x[0] + (x[3]-x[0]) * ((y[1]-y[0])/(y[3]-y[0]))
+        x[2]                   = x[0] + (x[3]-x[0]) * ((y[2]-y[0])/(y[3]-y[0]))
 #
 #---- Adding the XAPPEX...
-        x[0]                       = -x[0] + self.geo['wing']['xappex']
-        x[1]                       = -x[1] + self.geo['wing']['xappex']
-        x[2]                       = -x[2] + self.geo['wing']['xappex']
-        x[3]                       = -x[3] + self.geo['wing']['xappex']
+        x[0]                   = -x[0] + self.geo['wing']['xappex']
+        x[1]                   = -x[1] + self.geo['wing']['xappex']
+        x[2]                   = -x[2] + self.geo['wing']['xappex']
+        x[3]                   = -x[3] + self.geo['wing']['xappex']
 
 #--- ...to List()...using a list is easier to later add new sections...
         for i in range(0,4):
@@ -153,14 +163,14 @@ class Create_Wing(object, metaclass=AuxTools):
 #
 #---- Computation of the chords...
 
-        self.geo['wing']['chords']    = list()
-        chords                     = np.zeros(4)
-        chords[0]                  = self.geo['wing']['croot']
-        chords[1]                  = self.geo['wing']['croot'] + (self.geo['wing']['ctip'] - self.geo['wing']['croot']) * \
-                                                                   ((y[1]-y[0])/(y[3]-y[0]))
-        chords[2]                  = self.geo['wing']['croot'] + (self.geo['wing']['ctip'] - self.geo['wing']['croot']) * \
-                                                                   ((y[2]-y[0])/(y[3]-y[0]))
-        chords[3]                  = self.geo['wing']['ctip']
+        self.geo['wing']['chords'] = list()
+        chords      = np.zeros(4)
+        chords[0]   = self.geo['wing']['croot']
+        chords[1]   = self.geo['wing']['croot']  + (self.geo['wing']['ctip'] -\
+                      self.geo['wing']['croot']) * ((y[1]-y[0])/(y[3]-y[0]))
+        chords[2]   = self.geo['wing']['croot']  + (self.geo['wing']['ctip'] -\
+                      self.geo['wing']['croot']) * ((y[2]-y[0])/(y[3]-y[0]))
+        chords[3]   = self.geo['wing']['ctip']
 
 #--- ...to List()...using a list is easier to later add new sections...
         for i in range(0,4):
@@ -180,20 +190,22 @@ class Create_Wing(object, metaclass=AuxTools):
 #
 #---- Computation of the wing t/c
 
-        self.geo['wing']['tc']     = list()
-        self.geo['wing']['t']      = list()        
-        tc                         = np.zeros(4)
-        t                          = np.zeros(4)          
-        tc[1]                      = self.geo['wing']['tcroot']
-        tc[2]                      = self.geo['wing']['tckink']
-        tc[3]                      = self.geo['wing']['tctip']
+        self.geo['wing']['tc']  = list()
+        self.geo['wing']['t']   = list()        
+        tc                      = np.zeros(4)
+        t                       = np.zeros(4)          
+        tc[1]                   = self.geo['wing']['tcroot']
+        tc[2]                   = self.geo['wing']['tckink']
+        tc[3]                   = self.geo['wing']['tctip']
         
-        t[1]                       =  tc[1] * chords[1]
-        t[2]                       =  tc[2] * chords[2]
-        t[3]                       =  tc[3] * chords[3]        
+        t[1]                    =  tc[1] * chords[1]
+        t[2]                    =  tc[2] * chords[2]
+        t[3]                    =  tc[3] * chords[3]        
 
-        tc[0]                      = ( t[1] + ((y[0]-y[1])/(y[1]-y[2])) * (t[1]-t[2]) ) / chords[0]
-        t[0]                       =   t[1] + ((y[0]-y[1])/(y[1]-y[2])) * (t[1]-t[2])
+        tc[0]                   = ( t[1] + ((y[0]-y[1])/(y[1]-y[2])) *        \
+                                  (t[1]-t[2]) ) / chords[0]
+        t[0]                    =  t[1] + ((y[0]-y[1])/(y[1]-y[2])) *         \
+                                  (t[1]-t[2])
 
 #--- ...to List()...using a list is easier to later add new sections...
         for i in range(0,4):
@@ -202,39 +214,39 @@ class Create_Wing(object, metaclass=AuxTools):
 
 #
 #---- Computation of the wing Z
-        self.geo['wing']['zu']     = list()
-        self.geo['wing']['zl']     = list()        
-        zu                         = np.zeros(4)
-        zl                         = np.zeros(4)
+        self.geo['wing']['zu']  = list()
+        self.geo['wing']['zl']  = list()        
+        zu                      = np.zeros(4)
+        zl                      = np.zeros(4)
 
-        zu[0]                      = 0.0
-        zu[3]                      = zu[0] - y[3]*np.tan(-self.geo['wing']['dihedral']*np.pi/180.0)  \
+        zu[0] = 0.0
+        zu[3] = zu[0] - y[3]*np.tan(-self.geo['wing']['dihedral']*np.pi/180.0)\
                                            + (t[3]/2.0 - t[0]/2.0)
-        zu[1]                      = zu[0] + (zu[3]-zu[0])*((y[1]-y[0])/(y[3]-y[0]))
-        zu[2]                      = zu[0] + (zu[3]-zu[0])*((y[2]-y[0])/(y[3]-y[0]))
+        zu[1] = zu[0] + (zu[3]-zu[0])*((y[1]-y[0])/(y[3]-y[0]))
+        zu[2] = zu[0] + (zu[3]-zu[0])*((y[2]-y[0])/(y[3]-y[0]))
 #
-        zl[0]                      = zu[0] - t[0]
-        zl[1]                      = zu[1] - t[1]
-        zl[2]                      = zu[2] - t[2]
-        zl[3]                      = zu[3] - t[3]
+        zl[0] = zu[0] - t[0]
+        zl[1] = zu[1] - t[1]
+        zl[2] = zu[2] - t[2]
+        zl[3] = zu[3] - t[3]
 
-        aux1                       = zu[0] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux2                       = zu[1] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux3                       = zu[2] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux4                       = zu[3] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux5                       = zl[0] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux6                       = zl[1] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux7                       = zl[2] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
-        aux8                       = zl[3] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])        
+        aux1  = zu[0] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux2  = zu[1] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux3  = zu[2] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux4  = zu[3] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux5  = zl[0] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux6  = zl[1] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux7  = zl[2] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])
+        aux8  = zl[3] - self.geo['wing']['yappex'] - (1.0/3.0) * (zu[0]+zl[0])        
 
-        zu[0]                      = aux1
-        zu[1]                      = aux2
-        zu[2]                      = aux3
-        zu[3]                      = aux4        
-        zl[0]                      = aux5
-        zl[1]                      = aux6
-        zl[2]                      = aux7
-        zl[3]                      = aux8
+        zu[0] = aux1
+        zu[1] = aux2
+        zu[2] = aux3
+        zu[3] = aux4        
+        zl[0] = aux5
+        zl[1] = aux6
+        zl[2] = aux7
+        zl[3] = aux8
         
 #--- ...to List()...using a list is easier to later add new sections...
         for i in range(0,4):

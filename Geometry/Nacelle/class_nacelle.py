@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -26,6 +27,7 @@
 
 """
 from Auxilliary.class_aux import AuxTools
+from Auxilliary.UnitConvertions import Units
 import numpy as np
 
 #----------------------------------------------------------------------#
@@ -49,8 +51,8 @@ class Create_Nacelle(object, metaclass=AuxTools):
         self.geo['nacelle']          = {}  
         self.geo['nacelle']['type']  =    1
         self.geo['nacelle']['no']    =    2
-        self.geo['nacelle']['dfan']  =   69.800
-        self.geo['nacelle']['lmax']  =  136.000
+        self.geo['nacelle']['dfan']  =   69.800 * Units('inch','meters')
+        self.geo['nacelle']['lmax']  =  136.000 * Units('inch','meters')
         self.geo['nacelle']['tc']    =    0.080
 
         vvars = list()
@@ -77,8 +79,8 @@ class Create_Nacelle(object, metaclass=AuxTools):
     def Nacelle(self):
 
 # inches to meters...
-        dfan  = self.geo['nacelle']['dfan'] * 0.0254
-        lmax  = self.geo['nacelle']['lmax'] * 0.0254
+        dfan  = self.geo['nacelle']['dfan'] * Units('inch','meters')
+        lmax  = self.geo['nacelle']['lmax'] * Units('inch','meters')
 
         if self.geo['nacelle']['type'] == 1 :
             nac_dav = 1.30 * dfan
@@ -86,7 +88,12 @@ class Create_Nacelle(object, metaclass=AuxTools):
         else:
              nac_dav   = 1.35 * dfan
              self.geo['nacelle']['swet'] = np.pi * nac_dav * lmax * 1.10 
-    
+
+# I am doing this because in case I enter many times in this method I can keep
+# scalling the nacelle many times...
+
+        self.geo['nacelle']['dfan'] = dfan
+        self.geo['nacelle']['lmax'] = lmax
 #----------------------------------------------------------------------#
 #                 Print the Nacelle Component                          #
 #----------------------------------------------------------------------#    

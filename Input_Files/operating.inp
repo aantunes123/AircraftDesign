@@ -6,11 +6,11 @@
 #   ncrew               --> atendees                      [-] [integer]      #
 #   pass_weight         --> weight pass. + baggage        [Kg][real]         #
 #   freight_w           --> freight weight                [Kg][real]         #
-#   MTOW                --> Maximum Takeoff Weight        [Kg][real]         #
+#   MTOW                --> Initial guess MTOW            [Kg][real]         #
 #                                                                            #
 #----------------------------------------------------------------------------#
-no_pass             =  90
-ncrew               =    4
+no_pass             =  106
+ncrew               =    5
 pass_weight         =  100.0
 freight_weight      =  1200.0
 mtow                = 46471.0

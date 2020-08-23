@@ -10,6 +10,11 @@
 #   th_tip         --> tip thickness                           [-]  [real]   #
 #   appex_14croot  --> appex at 1/4 of the VT_Croot            [m]  [real]   #
 #                                                                            #
+#   profiles       --> no. of profiles for the VT              [-][integer]  #
+#   parameter.     --> only Bezier available at the moment     [-]   [str]   #
+#   bezier_cp      --> Bezier control points for the stations  [-]   [str]   #
+#   output         --> output directory                        [-]   [str]   #
+#                                                                            #
 #----------------------------------------------------------------------------#
 sref                =  16.205
 ar                  =   1.714
@@ -22,5 +27,5 @@ appex_14croot       =  30.930
 profiles            =   2
 parameterization    =   bezier
 bezier_cp           =   .\Input_Files\Bezier_CP_VT.inp
-output_profile      =   .\Output_Files\airfoil.dat
+output_profile      =   .\Output_Files\VT_airfoil.dat
 

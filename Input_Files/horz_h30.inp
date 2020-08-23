@@ -13,12 +13,17 @@
 #   horz_appex_14_croot --> appex at 1/4 of the HT_Croot       [m]  [real]   #
 #                                                                            #
 #----------------------------------------------------------------------------#
-sref                =  25.785
-ar                  =   5.772
-sweep14             =  25.508
-taper               =   0.243
-dihedral            =   8.000
-th_root             =   0.110
-th_tip              =   0.110
-width_fus           =   1.260
-appex_14croot       =  29.530
+sref             =  25.785
+ar               =   5.772
+sweep14          =  25.508
+taper            =   0.243
+dihedral         =   8.000
+th_root          =   0.110
+th_tip           =   0.110
+width_fus        =   1.260
+appex_14croot    =  29.530
+
+profiles         =   2
+parameterization =   cst
+cst_cp           =   .\Input_Files\CST_CP_HT.inp
+output_profile   =   .\Output_Files\HT_airfoil.dat

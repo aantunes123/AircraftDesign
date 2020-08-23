@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #-----------------------------------------------------------------------------#
 #   Program to compute the aircraft main geometrical parameters.              #
 #                                                                             #
@@ -63,6 +64,7 @@ class Coefficients(object, metaclass=AuxTools):
 
         components = ('wing', 'horz', 'vert')
         
+        self.drag['total'] = 0.0
 
 # Loping over the Components...
 
@@ -95,6 +97,9 @@ class Coefficients(object, metaclass=AuxTools):
                                 self.geo[item]['tcave'] + 100    *            \
                                ((self.geo[item]['tcave'])**4.0)) *            \
                              self.geo[item]['swet']/self.geo['wing']['sref']
+                             
+            self.drag['total'] = self.drag['total'] + self.drag[item]['cdo']* \
+                                 10000
 
 #------------                     FUSELAGE        -----------------------------
 
@@ -131,7 +136,10 @@ class Coefficients(object, metaclass=AuxTools):
 #                                      self.geo['fus']['diameter'])          / \
 #                                      self.geo['wing']['sref']
 
-           
+# Summing the total drag....
+        self.drag['total'] = self.drag['total'] + self.drag['fus']['cdo'] *   \
+                              10000
+                              
 #----------------                   PYLON                ----------------------
 
         cs   = np.cos(self.geo['pylon']['sweep']*np.pi/180.0)
@@ -155,6 +163,10 @@ class Coefficients(object, metaclass=AuxTools):
                                         self.geo['pylon']['swet'] /           \
                                         self.geo['wing']['sref']
 
+# Summing the total drag....
+        self.drag['total'] = self.drag['total'] + self.drag['pylon']['cdo'] * \
+                              10000        
+
 #----------------                 NACELLE                ----------------------        
            
         reynac = reym * self.geo['nacelle']['lmax'] 
@@ -173,6 +185,9 @@ class Coefficients(object, metaclass=AuxTools):
         self.drag['nacelle']['cdo']  = self.geo['nacelle']['no'] * cfnac   *  \
                                        FFnac * self.geo['nacelle']['swet'] /  \
                                                self.geo['wing']['sref']
+# Summing the total drag....
+        self.drag['total'] = self.drag['total'] + self.drag['nacelle']['cdo']*\
+                              10000  
 #
 #---- Plotting the computed data...
         if self.screen_flag == True:
@@ -201,6 +216,7 @@ class Coefficients(object, metaclass=AuxTools):
 # AVL case name
         file     = 'AVL_Sim'        
         file_geo = file+'.avl'
+
 
         f1       = open(file_geo,'w')
         f1.write('%s  \n' %('AircraftDesign'))
@@ -293,14 +309,14 @@ class Coefficients(object, metaclass=AuxTools):
         file_star = '*.out'
 
 # deleting the output with the bending moment information
-        dire = os.getcwd()
+        dire = os.getcwd() 
         path = os.path.join(dire,file_ben)
 
         if os.path.isfile(path):   
             os.system('del '+file_ben)
 
 # deleting the output files
-        dire = os.getcwd()
+        dire = os.getcwd() 
         path = os.path.join(dire,file_out)
 
         if os.path.isfile(path):   
@@ -325,6 +341,7 @@ class Coefficients(object, metaclass=AuxTools):
         f2.write('%s   \n' %('FT'))  
 
 # check if the file exists...than I need a additional command...
+        dire = os.getcwd() + 'Output_Files'
         cfile = os.path.join(dire,file_out)  
         flag  = os.path.isfile(cfile)
 
@@ -342,6 +359,7 @@ class Coefficients(object, metaclass=AuxTools):
         f2.close()
 
 # Command to run the case
+        dire = os.getcwd() 
         command = 'avl.exe < ' + file_run 
         case = os.path.join(dire,command)
 
@@ -362,6 +380,11 @@ class Coefficients(object, metaclass=AuxTools):
                 self.drag['wing']['induced'] = float(aux[5]) 
                 flag                         = False
         f3.close()
+
+# Summing the total drag....
+        self.drag['total'] = self.drag['total'] + self.drag['wing']['induced']*\
+                             10000
+
 #
 #---- Print the Induced drag...
         print('  ')
@@ -393,6 +416,12 @@ class Coefficients(object, metaclass=AuxTools):
                 
             k +=1
         f6.close()
+#
+#  Here are some files that I will move in the end of the analysis or 
+#  optimization
+  
+        self.move_files = ('AVL_Sim.out', 'AVL_Sim.run', 'AVL_Sim_bending.out',
+                           'AVL_Sim_strip.out', 'AVL_Sim.avl')
 
 #------------------------------------------------------------------------------
     def WaveDrag(self,airprop,Fphase):        
@@ -463,11 +492,33 @@ class Coefficients(object, metaclass=AuxTools):
                 #print(self.avl_y[i],aux5,ds)
 
         self.drag['wing']['wave'] = 2.0*cdwave
+
+# Summing the total drag....
+        drag_calibration   = 70.0
+        self.drag['total'] = self.drag['total'] + self.drag['wing']['wave'] * \
+                             10000 + drag_calibration
 #
-#---- Print the Induced drag...
+#---- Print the Wave drag...
 
         print('   CD_Wave Wing [counts]    --> ' + "{0:.1f}".      \
                                     format(self.drag['wing']['wave']*10000)) 
+
+        print(' ')
+        print('   CD Total     [counts]    --> ' + "{0:.1f}".      \
+                                    format(self.drag['total'])) 
+    
+# Updating the L/D ratio...notice that to compute the MTOW it is necessary to
+# guess the required fuel to accomplish the mission. Thus, it is assumed an
+# value for the L/D. After the weight is computed the drag can be obtained and
+# thereby, a new L/D value. So, this new value is now adopted to compute the 
+# new required amount of fuel to accomplish the mission and a new MTOW is 
+# obtainedand and a new drag and so on....this is an iteractive process... 
+# Method that perfom this iterative process is --> Geometry_Weight_Drag
+# Below I am just updating the value of the L/D.
+
+        self.perf['ld_old'] = self.perf['ld']
+        self.perf['ld']     = self.perf['CL'] / self.drag['total'] * 10000
+
 
         """
         Checking the wave drag for different mach number..saity check...

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  
     Code   :  Aircraft Design (03/02/2017)                                              
@@ -24,7 +25,7 @@
     This is the method that starts the enitre set of numerical
     computation.
 
-    Last Modification:...................01/03/2020 - Alexandre Antunes    
+    Last Modification:...................14/07/2020 - Alexandre Antunes    
 """
 
 from Flight_Conditions.flight_cond import Flight_Setup
@@ -33,70 +34,53 @@ from Plotting.plot import Plot_Figure
 from Plotting.plot import Rendering
 from Optimization.GA_Class import Simple_GA
 from Optimization.GA_Setup import GA_Setup
-
+from Auxilliary.Decorators import Performance
 from scipy.optimize import minimize
-from scipy.optimize import fmin
+
 
 from time import time
 
 #import pprint
 
 # -----------------------------------------------------------------------------
-def Performance(fn):
-    """
-        Decorator to measure the total time spend on the computation:
-        Analysis or Optimization.
-       
-    """
-    def wrapper(*args, **kargs):
-        t1 = time()
-        result = fn(*args, **kargs)
-        t2 = time()
-        print(f'Computation time ', '{:02.6f}'.format(t2-t1),' seconds')
-        return result
-    return wrapper
-
-# -----------------------------------------------------------------------------
 @Performance
 def Aircraft_Opt(x,*args,**kargs):
     """
-        This method defines the optimization problem. Thus, the user
-        must select the objective function and perform the setup of
-        the input file from the GA algorithm to specify the range of 
-        the design variables.
+    
+        This method defines the optimization problem. Thus, the user must 
+        select the objective function and perform the setup of the input file 
+        from the GA algorithm or the Gradient based method to specify the range 
+        of the design variables.
+        
     """
-    p100.geo['wing']['sref'] = float(x)
+    E190.geo['wing']['sref'] = float(x)
 
-# Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
-    p100.Compute_Geometry()
+# Computing the geometry, weight and drag. This is an iterative process.
+    E190.Geometry_Weight_Drag(args[0])
 
-# Computing the Weight...
-    p100.Compute_Weight(args[0])
-
-# Computing the Drag....
-    p100.Compute_Drag(atmos)
-
-    return abs(p100.perf['curr_range']-p100.perf['range'])
+    return abs(E190.perf['curr_range']-E190.perf['range'])
 
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
    
     t1 = time()
-
+    
     # Creating the Aircraft Object using the Input Files from the respective
     # components....
-    p100 = Create_Aircraft(Fwing='.\\Input_files\\wing_w65.inp',
-                           Fhorz='.\\Input_files\\horz_h30.inp',
-                           Fvertical='.\\Input_files\\vert_v20.inp',
-                           Fus='.\\Input_files\\fuselage_f40.inp',
-                           Fnacelle='.\\Input_files\\nacelle_n10.inp',
-                           Fpylon='.\\Input_files\\pylon_p5.inp',
-                           Fperf='.\\Input_files\\performance.inp',
-                           Foper='.\\Input_files\\operating.inp',
-                           Fprop='.\\Input_files\\propulsion.inp',
-                           Method='Torenbeek',
-                           Screen=True
+    E190 = Create_Aircraft(Fwing     = '.\\Input_files\\wing_w65.inp',
+                           Fhorz     = '.\\Input_files\\horz_h30.inp',
+                           Fvertical = '.\\Input_files\\vert_v20.inp',
+                           Fus       = '.\\Input_files\\fuselage_f40.inp',
+                           Fnacelle  = '.\\Input_files\\nacelle_n10.inp',
+                           Fpylon    = '.\\Input_files\\pylon_p5.inp',
+                           Fhighlift = '.\\Input_files\\highlift_fl10.inp',
+                           Fperf     = '.\\Input_files\\performance.inp',
+                           Foper     = '.\\Input_files\\operating.inp',
+                           Fprop     = '.\\Input_files\\propulsion.inp',
+                           Method    = 'Torenbeek',
+                           Screen    = True,
+                           Render    = False
                            )
 
 # Flight Conditions and computing the Atmospheric Properties
@@ -106,20 +90,11 @@ if __name__ == '__main__':
 # (1) Analysis,   (2) Optimization
 
     flag = 1
-    
+
     if flag == 1:
-# Computing the Geometry of the Wing, Horizontal tail, Vertical Tail, Fuselage.
-        p100.Compute_Geometry()
-
-# Computing the Weight...
-        p100.Compute_Weight(atmos)
-
-# Computing the Drag....
-        p100.Compute_Drag(atmos)
-
-
-# Computing the Propulsion System...
-        p100.Compute_Propulsion()
+# Computing the geometry, weight and drag. This is an iterative process.
+        E190.Geometry_Weight_Drag(atmos)
+       #E190.Compute_Geometry()
 
 # Plotting the Geometry PlanForm
     #    Plot_Figure(True, 3, p100)
@@ -144,7 +119,7 @@ if __name__ == '__main__':
     # ga.Opt_SGA(Aircraft_Opt)                       # Calling the SGA Method
 
 # Calling the rendering Method
-   # Rendering(p100)
+   # Rendering(E190)
 
     t2 = time()
     print('    ')
